@@ -1,0 +1,134 @@
+<html>
+<body>
+    <article>
+        <h1> Some Facts </h1>
+        <h2> The Chocolate </h2>
+        <h3> History of the chocolate </h3>
+        <p> Chocolate is made from tropical Theobroma cacao tree seeds. 
+        Its earliest use dates back to the Olmec civilization in Mesoamerica.</p>
+        <p> After the European discovery of the Americas, chocolate became 
+        very popular in the wider world, and its demand exploded. </p>
+        <p> Chocolate has since become a popular food product that millions enjoy every day, 
+        thanks to its unique, rich, and sweet taste.</p> 
+        <p> But what effect does eating chocolate have on our health?</p> 
+    </article>
+    <button id="boldBtn">Make text Bold</button>
+
+    <form>
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="firstname"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lastname"><br><br>
+        <input type="submit" value="Submit" id="submit">
+      </form> 
+      <ul class="usersAnswer"></ul>
+      
+      
+
+      <p><strong>Hello</strong> I hope you are enjoying <strong>this</strong> class. At the
+        <strong>end</strong> you <strong>will</strong> be great Developers!
+        <strong>Enjoy</strong> the <strong>JavaScript </strong> lessons</p>
+        
+    
+    
+
+    <script> 
+        //get elmeby id -->  elment.addlistner("name", funct) and defin the functions  function1 (){ alert on click}
+
+        const h1 = document.querySelector("h1");
+        console.log(h1);
+         //2 reomve last p 
+         const article=document.querySelector("article");
+         const lastp=article.lastElementChild;
+         // ERROR 1: lasp is not defined, should be lastp
+         article.removeChild(lastp);
+
+         const h2=document.querySelector("h2");
+         h2.addEventListener("click",function(){
+            h2.style.backgroundColor="red";
+         });
+         //4
+         const h3=document.querySelector("h3");
+         h3.addEventListener("click",function(){
+            h3.style.display="none";
+         });
+
+         //5 Add a <button> to the HTML file, that when clicked on,
+         //  should make the text of all the paragraphs, bold.
+         const btn=document.getElementById("boldBtn");
+         const allparagraph =document.querySelectorAll("p");
+
+         // ERROR 2: Syntax error in eventListener function parameter, missing () after function
+         btn.addEventListener("click",function(){
+            allparagraph.forEach(function(p){
+                p.style.fontWeight="bold";
+            });
+         });
+
+         //EXercice 2 
+         
+         const form = document.querySelector("form");
+         console.log(form);
+
+         const fname = document.getElementById("fname");
+         const lname = document.getElementById("lname");
+         console.log(fname);
+         console.log(lname);
+
+         // Use event.preventDefault() to prevent the default form submission (which would reload the page)
+         form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get the values of the input tags
+            const firstValue = fname.value.trim();
+            const lastValue = lname.value.trim();
+
+            // Make sure that they are not empty
+            if (firstValue === "" || lastValue === "") {
+                alert("Please fill in both your first and last names.");
+                return;
+            }
+
+            // Create an li per input value
+            const li1 = document.createElement("li");
+            li1.textContent = firstValue;
+            const li2 = document.createElement("li");
+            li2.textContent = lastValue;
+
+            // Append them to the <ul class="usersAnswer"></ul>
+            const ul = document.querySelector(".usersAnswer");
+            ul.appendChild(li1);
+            ul.appendChild(li2);
+         });
+
+         let allBoldItems; 
+         function getBolditem(){
+            
+            const paragraph = document.getElementById("myParagraph");
+            const bolditem=paragraph.querySelectorAll("strong");
+        
+         }
+         getBolditem();
+
+         function highlight() {
+    allBoldItems.forEach(function(item) {
+        item.style.color = "blue";
+    });
+}
+
+function returnItemsToDefault() {
+    allBoldItems.forEach(function(item) {
+        item.style.color = "black";
+    });
+}
+
+const paragraph = document.getElementById("myParagraph");
+
+paragraph.addEventListener("mouseover", highlight);
+paragraph.addEventListener("mouseout", returnItemsToDefault);
+
+
+
+    </script>
+</body>
+</html>

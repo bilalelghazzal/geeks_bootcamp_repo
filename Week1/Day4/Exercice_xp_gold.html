@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Challenge: Mad Libs</title>
+ </head>
+ <body>
+    <select id="genres">
+        <option value="rock">Rock</option>
+        <option value="blues" selected>Blues</option>
+        <option value="classic">classic</option>
+    </select>
+    <br>
+
+    
+    <form>
+        <select id="colorSelect">
+            <option>Red</option>
+            <option>Green</option>
+            <option>White</option>
+            <option>Black</option>
+        </select>
+        <input type="button" value="Select and Remove">
+    </form>
+    
+      
+      <script>
+        // exercie 1 
+      //ques 1   
+      const valuesis = document.getElementById("genres");
+      
+      valuesis.addEventListener("change",function(){
+        alert("selected value" + +valuesis.value);
+      });
+      // 2 et 3 
+      valuesis.value="classic";
+
+
+      //exercice 2 
+      const removeBtn = document.querySelector('input[type="button"]');
+      const colorSelect = document.getElementById("colorSelect");
+    // remove 
+      function removecolor() {
+
+        const selectedIndex = colorSelect.selectedIndex;
+        if (selectedIndex >= 0) {
+          colorSelect.remove(selectedIndex);
+        }
+      }
+
+      removeBtn.addEventListener("click", removecolor);
+
+      </script>
+ </body>
+</html>

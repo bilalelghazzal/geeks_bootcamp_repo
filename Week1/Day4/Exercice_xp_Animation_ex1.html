@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+        p {
+          background: yellow;
+          color: red;
+        }
+
+
+        #container {
+          width: 400px;
+          height: 400px;
+          position: relative;
+          background: yellow;
+        }
+        #animate {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          background-color: red;
+        }
+
+        </style>
+    </head>
+    <body><!--
+        Exercice 1 
+    -->
+        <div id="container"></div>
+        <button id="clear">Clear Interval</button>
+  
+
+        <script>
+
+        
+
+            //1
+            const timeoutid=setTimeout(()=>window.alert("hello",2000));
+
+            const container = document.getElementById("container");
+            let intervalId;
+
+            function addHelloWorldParagraph() {
+                const p = document.createElement("p");
+                p.textContent = "Hello World";
+                container.appendChild(p);
+                // If there are 5 paragraphs, clear the interval
+                if (container.querySelectorAll("p").length >= 5) {
+                    clearInterval(intervalId);
+                }
+            }
+
+            // Start the interval
+            intervalId = setInterval(addHelloWorldParagraph, 2000);
+
+            // Stop the interval if the button is clicked
+            document.getElementById("clear").addEventListener("click", function() {
+                clearInterval(intervalId);
+            });
+        </script> 
+    </body>
+    </html>
