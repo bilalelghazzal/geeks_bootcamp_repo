@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drum Kit</title>
+</head>
+<style>
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('background.jpg') center/cover no-repeat;
+  font-family: Arial, sans-serif;
+}
+
+.drum-container {
+  display: flex;
+  gap: 12px;
+}
+
+.pad {
+  width: 120px;
+  height: 120px;
+  border: 3px solid gold;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.pad:hover {
+  background: rgba(255, 200, 0, 0.2);
+}
+
+.pad.active {
+  background: rgba(255, 200, 0, 0.4);
+  transform: scale(0.95);
+}
+
+.key {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: gold;
+}
+
+.sound {
+  font-size: 0.85rem;
+  margin-top: 8px;
+  color: white;
+}
+</style>
+<body>
+
+  <div class="drum-container">
+    <div class="pad" data-key="65"><span class="key">A</span><span class="sound">Boom</span></div>
+    <div class="pad" data-key="83"><span class="key">S</span><span class="sound">Clap</span></div>
+    <div class="pad" data-key="68"><span class="key">D</span><span class="sound">HiHat</span></div>
+    <div class="pad" data-key="70"><span class="key">F</span><span class="sound">Kick</span></div>
+    <div class="pad" data-key="71"><span class="key">G</span><span class="sound">OpenHat</span></div>
+    <div class="pad" data-key="72"><span class="key">H</span><span class="sound">Ride</span></div>
+    <div class="pad" data-key="74"><span class="key">J</span><span class="sound">Snare</span></div>
+    <div class="pad" data-key="75"><span class="key">K</span><span class="sound">Tink</span></div>
+    <div class="pad" data-key="76"><span class="key">L</span><span class="sound">Tom</span></div>
+  </div>
+
+  <audio data-key="65" src="sounds/boom.wav"></audio>
+  <audio data-key="83" src="sounds/clap.wav"></audio>
+  <audio data-key="68" src="sounds/hihat.wav"></audio>
+  <audio data-key="70" src="sounds/kick.wav"></audio>
+  <audio data-key="71" src="sounds/openhat.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tink.wav"></audio>
+  <audio data-key="76" src="sounds/tom.wav"></audio>
+
+  <script>
+  
+document.addEventListener("keydown", function(e) {
+  playSound(e.keyCode);
+});
+
+const pads = document.querySelectorAll(".pad");
+
+pads.forEach(function(pad) {
+  pad.addEventListener("click", function() {
+    playSound(pad.dataset.key);
+  });
+});
+
+// Play sound + flash animation 
+function playSound(keyCode) {
+  const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+  const pad   = document.querySelector(`.pad[data-key="${keyCode}"]`);
+
+  if (!audio) return; // key not mapped
+
+  audio.currentTime = 0;
+  audio.play();
+
+  pad.classList.add("active");
+  setTimeout(function() {
+    pad.classList.remove("active");
+  }, 150);
+}
+  </script>
+</body>
+</html>
