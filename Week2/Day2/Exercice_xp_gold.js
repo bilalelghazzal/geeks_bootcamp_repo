@@ -37,3 +37,5 @@ const sentence = greeting.map(arr => arr.join(" ")).join(" ");
 const trapped = [[[[[[[[[[[[[[[[[[[[[[[[[[3]]]]]]]]]]]]]]]]]]]]]]]]]];
 const result2 = trapped.flat(Infinity);
 // [3]
+
+// update 
