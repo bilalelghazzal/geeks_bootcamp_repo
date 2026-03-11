@@ -53,4 +53,6 @@ function printFullName({ first, last }) {
   
   console.log(counterOne.count);
   // Output: 3
-  // updat 
+  
+  
+  //fin 
