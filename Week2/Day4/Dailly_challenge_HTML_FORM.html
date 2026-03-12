@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Form to JSON</h1>
+        
+        <form id="myForm">
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            placeholder="John" 
+            required
+          >
+          <input 
+            type="text" 
+            id="lastname" 
+            name="lastname" 
+            placeholder="Doe" 
+            required
+          >
+          <input type="submit" value="Send">
+        </form>
+        
+        <div id="output"></div>
+      </div>
+
+      <script>
+
+        const form = document.getElementById('myForm');
+        const outputDiv = document.getElementById('output');
+
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent page reload
+
+          const name = document.getElementById("name").value;
+          const lastname = document.getElementById("lastname").value;
+
+          const obj = {
+            name: name,
+            lastname: lastname
+          };
+
+          const jsToString = JSON.stringify(obj);
+          outputDiv.textContent = jsToString;
+        });
+      </script>
+</body>
+</html>
