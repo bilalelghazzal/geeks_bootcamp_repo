@@ -22,5 +22,3 @@ function timesTwoAsync(x) {
     .then(result => {
       console.log(result); 
     });
-
-// analyse code below 
