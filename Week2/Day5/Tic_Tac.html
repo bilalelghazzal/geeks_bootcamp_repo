@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic Tac Toe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background-color: #3aabf0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      gap: 1.4rem;
+    }
+
+    h1 { color: white; font-size: 2.2rem; font-weight: 900; }
+
+    .choose { display: flex; gap: .8rem; }
+
+    .choose-btn {
+      padding: .5rem 1.8rem;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,.25);
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .choose-btn.active { background: white; color: #3aabf0; }
+    .choose-btn:hover  { background: rgba(255,255,255,.45); }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 110px);
+      grid-template-rows:    repeat(3, 110px);
+    }
+
+    .cell {
+      width: 110px; height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; font-weight: 900; color: white;
+      cursor: pointer; user-select: none;
+      transition: background .15s;
+    }
+    .cell:hover:not(.taken) { background: rgba(255,255,255,.15); }
+    .cell:nth-child(3n+1),
+    .cell:nth-child(3n+2)   { border-right: 4px solid #1a1a2e; }
+    .cell:nth-child(-n+6)   { border-bottom: 4px solid #1a1a2e; }
+    .cell.taken { cursor: default; }
+    .cell.win   { color: #fff700; }
+
+    #status {
+      color: white; font-size: 1.3rem; font-weight: 700;
+      min-height: 1.8rem; text-align: center;
+    }
+
+    #restart {
+      display: none;
+      padding: .6rem 2rem; border: none; border-radius: 8px;
+      background: white; color: #3aabf0;
+      font-family: 'Nunito', sans-serif; font-size: 1.1rem; font-weight: 900;
+      cursor: pointer;
+    }
+    #restart:hover { opacity: .85; }
+  </style>
+</head>
+<body>
+
+  <h1>Tic Tac Toe Game</h1>
+
+  <div class="choose">
+    <button class="choose-btn active" id="btnX" onclick="chooseSymbol('X')">X</button>
+    <button class="choose-btn"        id="btnO" onclick="chooseSymbol('O')">O</button>
+  </div>
+
+  <div id="board">
+    <div class="cell" onclick="playerMove(0)"></div>
+    <div class="cell" onclick="playerMove(1)"></div>
+    <div class="cell" onclick="playerMove(2)"></div>
+    <div class="cell" onclick="playerMove(3)"></div>
+    <div class="cell" onclick="playerMove(4)"></div>
+    <div class="cell" onclick="playerMove(5)"></div>
+    <div class="cell" onclick="playerMove(6)"></div>
+    <div class="cell" onclick="playerMove(7)"></div>
+    <div class="cell" onclick="playerMove(8)"></div>
+  </div>
+
+  <div id="status">Choose your symbol and play!</div>
+  <button id="restart" onclick="restartGame()">Restart Game</button>
+
+  <script>
+    const winCombos = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[6,4,2]
+    ];
+
+    let playerSymbol   = 'X';
+    let computerSymbol = 'O';
+    let board          = Array(9).fill('');
+    let gameOver       = false;
+
+    const cells      = document.querySelectorAll('.cell');
+    const statusEl   = document.getElementById('status');
+    const restartBtn = document.getElementById('restart');
+
+    function chooseSymbol(sym) {
+      playerSymbol   = sym;
+      computerSymbol = sym === 'X' ? 'O' : 'X';
+      document.getElementById('btnX').classList.toggle('active', sym === 'X');
+      document.getElementById('btnO').classList.toggle('active', sym === 'O');
+      restartGame();
+    }
+
+    function playerMove(index) {
+      if (gameOver || board[index] !== '') return;
+      placeSymbol(index, playerSymbol);
+      if (checkEnd()) return;
+      setTimeout(computerMove, 400);
+    }
+
+    function computerMove() {
+      if (gameOver) return;
+
+      // 1. Win if possible
+      let move = findBestMove(computerSymbol);
+      // 2. Block player
+      if (move === -1) move = findBestMove(playerSymbol);
+      // 3. Center
+      if (move === -1 && board[4] === '') move = 4;
+      // 4. Random
+      if (move === -1) {
+        const empty = board.reduce((acc, val, i) => {
+          if (val === '') acc.push(i);
+          return acc;
+        }, []);
+        if (empty.length === 0) return;
+        move = empty[Math.floor(Math.random() * empty.length)];
+      }
+
+      placeSymbol(move, computerSymbol);
+      checkEnd();
+    }
+
+    function findBestMove(sym) {
+      for (const combo of winCombos) {
+        const filled = combo.reduce((n, i) => n + (board[i] === sym ? 1 : 0), 0);
+        const empty  = combo.reduce((n, i) => n + (board[i] === ''  ? 1 : 0), 0);
+        if (filled === 2 && empty === 1) return combo.find(i => board[i] === '');
+      }
+      return -1;
+    }
+
+    function placeSymbol(index, sym) {
+      board[index] = sym;
+      cells[index].textContent = sym;
+      cells[index].classList.add('taken');
+    }
+
+    function checkEnd() {
+      const winner = getWinner();
+      if (winner) {
+        getWinCombo(winner).forEach(i => cells[i].classList.add('win'));
+        statusEl.textContent = winner === playerSymbol ? ' You win!' : ' PC wins!';
+        endGame();
+        return true;
+      }
+      const emptyLeft = board.reduce((n, v) => n + (v === '' ? 1 : 0), 0);
+      if (emptyLeft === 0) {
+        statusEl.textContent = 'Tie game!';
+        endGame();
+        return true;
+      }
+      return false;
+    }
+
+    function getWinner() {
+      for (const [a,b,c] of winCombos) {
+        if (board[a] && board[a] === board[b] && board[b] === board[c]) return board[a];
+      }
+      return null;
+    }
+
+    function getWinCombo(sym) {
+      return winCombos.find(([a,b,c]) => board[a]===sym && board[b]===sym && board[c]===sym) || [];
+    }
+
+    function endGame() {
+      gameOver = true;
+      restartBtn.style.display = 'inline-block';
+    }
+
+    function restartGame() {
+      board    = Array(9).fill('');
+      gameOver = false;
+      cells.forEach(c => { c.textContent = ''; c.classList.remove('taken','win'); });
+      statusEl.textContent     = 'Your turn!';
+      restartBtn.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
