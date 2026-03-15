@@ -24,3 +24,4 @@ fetch("https://api.giphy.com/v1/gifs/1?api_key=&rating=pg-13")
   .catch(error => {
     console.error('Fetch error:', error);
   });
+//
