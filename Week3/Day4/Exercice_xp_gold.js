@@ -10,7 +10,7 @@ Promise.all([promise1, promise2, promise3]).then(values => {
 });
 // promise all well take all of these three promises and dispmay them 
 
-function timesTwoAsync(x) {
+function timesTwoAsync(x) {https://www.geeks.institute/app/sessions/688b49296b29ce001b8ebd99/learn/pages/6985be53bd8d6e001b997d8e/sections/6985be53bd8d6e001b997d90
     return new Promise(resolve => resolve(x * 2)); // return the var x multiple par 2 
   }
   
