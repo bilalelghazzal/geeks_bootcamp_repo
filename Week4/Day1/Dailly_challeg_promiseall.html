@@ -69,70 +69,7 @@
         latitude_2.value = "40.730610";
         longitude_2.value = "-73.935242";
         getSunrises();
-            
-
-
-
-        /*
-        // Function to fetch sunrise hour from the sunrise-sunset.org API
-        
-        function fetchSunrise(lat, lng) {
-            return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`)
-                .then(response => response.json())
-                .then(data => data.results.sunrise);
-        }
-
-        // Function to display results
-        function displaySunrises(sunrise1, sunrise2) {
-            // Convert to hours and display both
-            const hour1 = new Date(sunrise1).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
-            const hour2 = new Date(sunrise2).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' });
-
-            // Create or update result display
-                resultDiv = document.createElement('div');
-                resultDiv.id = 'results';
-                document.body.appendChild(resultDiv);
-            resultDiv.innerHTML = `
-                <h3>Sunrise Times</h3>
-                <p>Paris: ${hour1}</p>
-                <p>New York: ${hour2}</p>
-            `;
-        }
-
-        // Function to get sunrise for both cities
-        function getSunrises() {
-            const parisLat = latitude_1.value;
-            const parisLng = longitude_1.value;
-            const nyLat = latitude_2.value;
-            const nyLng = longitude_2.value;
-
-            Promise.all([
-                fetchSunrise(parisLat, parisLng),
-                fetchSunrise(nyLat, nyLng)
-            ])
-            .then(([sunriseParis, sunriseNY]) => {
-                displaySunrises(sunriseParis, sunriseNY);
-            })
-            .catch(error => {
-                alert("Failed to retrieve sunrises: " + error);
-            });
-        }
-
-        // Trigger when all inputs lose focus (or you can add a button to trigger)
-        latitude_1.addEventListener('change', getSunrises);
-        longitude_1.addEventListener('change', getSunrises);
-        latitude_2.addEventListener('change', getSunrises);
-        longitude_2.addEventListener('change', getSunrises);
-
-        // Try with Paris and New York default values for testing:
-        // Paris: 48.864716, 2.349014
-        // New York: 40.730610, -73.935242
-        latitude_1.value = "48.864716";
-        longitude_1.value = "2.349014";
-        latitude_2.value = "40.730610";
-        longitude_2.value = "-73.935242";
-        // Show sunrise hours on page load for these defaults
-        getSunrises();*/
+        // updated . 
     </script>
 </body>
 </html>
