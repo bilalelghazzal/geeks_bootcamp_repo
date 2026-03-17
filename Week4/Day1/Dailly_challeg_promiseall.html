@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="GET ">
+        <input type="text" id="latitude_1" value="latitude_1"> latitude_1 <br>
+        <input type="text" id="longitude_1" value="longitude_1"> longitude_1 <br>
+        <input type="text" id="latitude_2" value="latitude_2"> latitude_2 <br>
+        <input type="text" id="longitude_2" value="longitude_2"> longitude_2
+    </form>
+    <script>
+        // Select inputs for both cities' latitude and longitude
+        const latitude_1 = document.querySelector('#latitude_1');
+        const longitude_1 = document.querySelector('#longitude_1');
+        const latitude_2 = document.querySelector('#latitude_2');
+        const longitude_2 = document.querySelector('#longitude_2');
+        // https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873 
+
+        function fetchsunrise(lat,lan){
+            return fetch('https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0')
+                   .then(response=>response.json())
+                   .then(data=>data.results.sunrise);
+        }
+        function displaySunrises(sunrise1, sunrise2) {
+            // Convert to hours and display both
+            const hour1 = new Date(sunrise1).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
+            const hour2 = new Date(sunrise2).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' });
+
+            // add result div 
+            resultdiv= document.createElement('div');
+            resultdiv.id='result';
+            document.body.appendChild(resultdiv);
+            resultDiv.innerHTML = `
+                <h3>Sunrise Times</h3>
+                <p>Paris: ${hour1}</p>
+                <p>New York: ${hour2}</p>
+            `;
+        }
+        // Function to get sunrise for both cities
+        function getSunrises() {
+            const parisLat = latitude_1.value;
+            const parisLng = longitude_1.value;
+            const nyLat = latitude_2.value;
+            const nyLng = longitude_2.value;
+
+            Promise.all([
+                fetchSunrise(parisLat, parisLng),
+                fetchSunrise(nyLat, nyLng)
+            ])
+            .then(([sunriseParis, sunriseNY]) => {
+                displaySunrises(sunriseParis, sunriseNY);
+            })
+            .catch(error => {
+                alert("Failed to retrieve sunrises: " + error);
+            });
+        }
+        // trigerr when value lose focus
+        latitude_1.addEventListener('change', getSunrises);
+        longitude_1.addEventListener('change', getSunrises);
+        latitude_2.addEventListener('change', getSunrises);
+        longitude_2.addEventListener('change', getSunrises);
+        // test value 
+        latitude_1.value = "48.864716";
+        longitude_1.value = "2.349014";
+        latitude_2.value = "40.730610";
+        longitude_2.value = "-73.935242";
+        getSunrises();
+            
+
+
+
+        /*
+        // Function to fetch sunrise hour from the sunrise-sunset.org API
+        
+        function fetchSunrise(lat, lng) {
+            return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`)
+                .then(response => response.json())
+                .then(data => data.results.sunrise);
+        }
+
+        // Function to display results
+        function displaySunrises(sunrise1, sunrise2) {
+            // Convert to hours and display both
+            const hour1 = new Date(sunrise1).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
+            const hour2 = new Date(sunrise2).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' });
+
+            // Create or update result display
+                resultDiv = document.createElement('div');
+                resultDiv.id = 'results';
+                document.body.appendChild(resultDiv);
+            resultDiv.innerHTML = `
+                <h3>Sunrise Times</h3>
+                <p>Paris: ${hour1}</p>
+                <p>New York: ${hour2}</p>
+            `;
+        }
+
+        // Function to get sunrise for both cities
+        function getSunrises() {
+            const parisLat = latitude_1.value;
+            const parisLng = longitude_1.value;
+            const nyLat = latitude_2.value;
+            const nyLng = longitude_2.value;
+
+            Promise.all([
+                fetchSunrise(parisLat, parisLng),
+                fetchSunrise(nyLat, nyLng)
+            ])
+            .then(([sunriseParis, sunriseNY]) => {
+                displaySunrises(sunriseParis, sunriseNY);
+            })
+            .catch(error => {
+                alert("Failed to retrieve sunrises: " + error);
+            });
+        }
+
+        // Trigger when all inputs lose focus (or you can add a button to trigger)
+        latitude_1.addEventListener('change', getSunrises);
+        longitude_1.addEventListener('change', getSunrises);
+        latitude_2.addEventListener('change', getSunrises);
+        longitude_2.addEventListener('change', getSunrises);
+
+        // Try with Paris and New York default values for testing:
+        // Paris: 48.864716, 2.349014
+        // New York: 40.730610, -73.935242
+        latitude_1.value = "48.864716";
+        longitude_1.value = "2.349014";
+        latitude_2.value = "40.730610";
+        longitude_2.value = "-73.935242";
+        // Show sunrise hours on page load for these defaults
+        getSunrises();*/
+    </script>
+</body>
+</html>
