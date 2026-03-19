@@ -10,7 +10,7 @@ body {
     padding: 2rem 2.5rem 2.5rem 2.5rem;
     margin: 60px auto 0 auto;
     border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(44,56,81,0.11);
+    box-shadow: 0 4px 24px rgba(44, 56, 81, 0.11);
     max-width: 400px;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@ form label {
 
 form input[type="number"],
 form select {
-    width:90%;
+    width: 100%;
     padding: 0.55em 0.7em;
     border-radius: 7px;
     border: 1px solid #b8b9ba;
@@ -44,7 +44,8 @@ form select {
     margin-bottom: 1rem;
     background: #ffffff;
     color: #050811;
-    transition: border-color 0.2s;
+    box-sizing: border-box;
+    appearance: none;
 }
 
 form input[type="number"]:focus,
@@ -68,12 +69,13 @@ form select:focus {
     height: 2.4em;
     cursor: pointer;
     color: #406af7;
-    box-shadow: 0 2px 6px rgba(44,56,81,0.08);
+    box-shadow: 0 2px 6px rgba(44, 56, 81, 0.08);
     display: flex;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
 .switch-btn:hover {
     background: #d1dbff;
 }
@@ -81,20 +83,21 @@ form select:focus {
 form button[type="submit"] {
     background: #3b54f7;
     color: #fff;
-    border :#3b3f54;
+    border: #3b3f54;
     border-radius: 6px;
-    font-size:large;
+    font-size: large;
     padding: 10px;
     font-weight: 600;
     margin-top: 0.3em;
     cursor: pointer;
-    box-shadow: 0 1px 6px rgba(44,56,81,0.07);
+    box-shadow: 0 1px 6px rgba(44, 56, 81, 0.07);
     transition: background 0.2s;
     display: block;
     margin-left: auto;
     margin-right: auto;
 
 }
+
 form button[type="submit"]:hover {
     background: #284fd1;
 }
@@ -113,7 +116,8 @@ form button[type="submit"]:hover {
         max-width: 97vw;
         padding: 1.3rem 0.9rem 2rem 0.9rem;
     }
+
     .converter-title {
-        font-size: 1.1rem; 
+        font-size: 1.1rem;
     }
 }
