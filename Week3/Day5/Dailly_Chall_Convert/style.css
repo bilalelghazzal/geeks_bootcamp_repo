@@ -114,6 +114,6 @@ form button[type="submit"]:hover {
         padding: 1.3rem 0.9rem 2rem 0.9rem;
     }
     .converter-title {
-        font-size: 1.1rem;
+        font-size: 1.1rem; 
     }
 }
