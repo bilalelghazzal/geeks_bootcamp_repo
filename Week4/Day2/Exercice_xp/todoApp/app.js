@@ -2,7 +2,7 @@ import { TodoList } from './todo.js';
 
 const myTodoList = new TodoList();
 
-// Add tasks
+// Add 
 myTodoList.addTask('Buy groceries');
 myTodoList.addTask('Walk the dog');
 myTodoList.addTask('Read a book');
@@ -10,7 +10,7 @@ myTodoList.addTask('Read a book');
 // (index 1)
 myTodoList.markTaskComplete(1);
 
-// List all tasks
+// list tasks
 const tasks = myTodoList.listTasks();
 console.log('My Todo List:');
 tasks.forEach(task => {

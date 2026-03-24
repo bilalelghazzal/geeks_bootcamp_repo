@@ -11,6 +11,6 @@ const productResult = multiply(4, 6);
 console.log('add : ', sumResult);
 console.log('multiply :', productResult);
 
-// Use lodash to multiply all numbers in the array using reduce and your multiply function
+// on use lodash for example 
 const productOfAll = _.reduce(numbers, multiply, 1);
 console.log('Product of all numbers in array :', productOfAll);
