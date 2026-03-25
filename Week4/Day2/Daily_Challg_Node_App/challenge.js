@@ -6,4 +6,4 @@ const user = 'billal';
 
 console.log(greet(user));
 console.log(colorfulMessage);
-readFile();
+readFile();//

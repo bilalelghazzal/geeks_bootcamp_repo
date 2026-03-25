@@ -8,4 +8,4 @@ fs.readData('file-data.txt', 'utf8', (err, data) => {
     console.log(data);
 });
 
-module.exports=readData
+module.exports=readData//
