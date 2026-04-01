@@ -1,4 +1,6 @@
-let currentEmoji = '';
+let currentEmoji = '';// declare the current emoji
+
+// load a new question
 
 async function loadNewQuestion() {
     const response = await fetch('/next-question');
