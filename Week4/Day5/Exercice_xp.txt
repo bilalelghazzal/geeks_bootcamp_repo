@@ -1,0 +1,36 @@
+
+==============Exercice 1 ===================================== 
+
+db.users.insertOne({
+  name: "Yasmine",
+  email: "yasmine@tech.ma",
+  address: {
+    city: "Casablanca",
+    country: "Morocco",
+    postalCode: "20000"
+  }
+})
+
+
+
+==============Exercice 2 ===================================== 
+
+===A : 
+db.users.findOne({ name: "Yasmine" }, { _id: 1 })
+
+====B :
+
+db.orders.insertOne({
+  orderNumber: "ORD-99X",
+  total: 1500,
+  currency: "MAD",
+  status: "Processing",
+  userId: ObjectId("64f1a2b3c4d5e6f7a8b9c0d1") 
+})
+
+==== verify : 
+b.orders.find({ userId: ObjectId("64f1a2b3c4d5e6f7a8b9c0d1") })
+
+================
+
+db.orders.find()
