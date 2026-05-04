@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
+
 // The Connection Handshake
 mongoose.connect('mongodb://localhost:27017/collegeDB')
   .then(() => console.log('✅ Connection Successful! Node.js is talking to MongoDB.'))
   .catch(err => console.error('❌ Connection Failed:', err));
-
+  
 // The Schema Definition
 const studentSchema = new mongoose.Schema({
     name: { 
