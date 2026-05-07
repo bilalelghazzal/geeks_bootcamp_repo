@@ -1,0 +1,53 @@
+
+CREATE DATABASE First_Db;
+
+
+-- 2. Create the 'items' table
+CREATE TABLE items (
+    item_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price INT NOT NULL
+);
+
+-- 3. Create the 'customers' table
+CREATE TABLE customers (
+    customer_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
+);
+
+-- 4. Add items to the 'items' table
+INSERT INTO items (name, price) VALUES 
+('Small Desk', 100),
+('Large desk', 300),
+('Fan', 80);
+
+-- 5. Add 5 new customers to the 'customers' table
+INSERT INTO customers (first_name, last_name) VALUES 
+('Greg', 'Jones'),
+('Sandra', 'Jones'),
+('Scott', 'Scott'),
+('Trevor', 'Green'),
+('Melanie', 'Johnson');
+
+-- 6. FETCHING DATA
+
+-- All the items
+SELECT * FROM items;
+
+-- All the items with a price above 80 (80 not included)
+SELECT * FROM items WHERE price > 80;
+
+-- All the items with a price below or equal to 300
+SELECT * FROM items WHERE price <= 300;
+
+-- All customers whose last name is ‘Smith’
+-- Outcome: This will return an empty result set (0 rows), 
+-- because no customer with the last name 'Smith' was added to the table.
+SELECT * FROM customers WHERE last_name = 'Smith';
+
+-- All customers whose last name is ‘Jones’
+SELECT * FROM customers WHERE last_name = 'Jones';
+
+-- All customers whose firstname is not ‘Scott’
+SELECT * FROM customers WHERE first_name <> 'Scott';
