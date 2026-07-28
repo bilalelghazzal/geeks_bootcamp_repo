@@ -16,7 +16,7 @@ static async getAllItems() {
     }
 }
 
-// . 
+// get menu item by name
 static async getItemByName(name){
     try {
         const query='select  item_id, item_name, item_price FROM menu_items WHERE item_name = \$1';
@@ -42,9 +42,9 @@ static async createItem(name,price){
         if (price==null || isNaN(price) || price<=0 ){ 
             throw new Error('price must be possitive number');
         }
-        const query ='inser into menu_items (item_name,item_price) values (\$1,\$2)'
-        const result=await pool.query(query,[name.trim(),price]);
-        return result.rowcount>0;
+        const query ='insert into menu_items (item_name,item_price) values (\$1,\$2) RETURNING item_id, item_name, item_price'
+        const result = await pool.query(query, [name.trim(), price]);
+        return result.rows[0] || null;
     } catch (error) {
         console.error('error creating menu item',error.message);
         throw error ;
