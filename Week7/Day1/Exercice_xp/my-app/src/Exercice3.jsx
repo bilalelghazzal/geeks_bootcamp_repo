@@ -1,8 +1,15 @@
+import './Exercice.css'
 function Exercise() {
+    const styleHeader = {
+                        color: "white",
+                        backgroundColor: "DodgerBlue",
+                        padding: "10px",
+                        fontFamily: "Arial",
+                    };
   return (
     <div>
-      <h1>Exercise 3</h1>
-      <p>This is a simple functional component.</p>
+      <h1 style={styleHeader}>Exercise 3</h1>
+      <p className="para">This is a simple functional component.</p>
       <a href="https://react.dev" target="_blank" rel="noreferrer">
         Learn React
       </a>
