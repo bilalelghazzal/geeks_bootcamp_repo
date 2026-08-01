@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+app.css
+index.css
+.oxlintrc.json
+readmefile
+vite.configi.js
+README.md
+vite.config.js
+
