@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ignore SVG favicon and icon assets
+favicon.svg
+icons*.svg
