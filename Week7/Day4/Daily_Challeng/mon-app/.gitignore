@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .oxlintrc.json
+public/favicon.svg
+public/icons.svg
+assests/*
