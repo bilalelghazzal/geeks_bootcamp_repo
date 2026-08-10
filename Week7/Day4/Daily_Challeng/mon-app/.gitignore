@@ -25,4 +25,5 @@ dist-ssr
 .oxlintrc.json
 public/favicon.svg
 public/icons.svg
-assests/*
+assets/
+
