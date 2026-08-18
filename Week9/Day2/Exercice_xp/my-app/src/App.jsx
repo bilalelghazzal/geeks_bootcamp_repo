@@ -37,15 +37,13 @@ function RobotStatus({ status }) {
 //
 function BrewButton() {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div>
       <button
         style={{
           color: "white",
           backgroundColor: "black",
           padding: "8px 12px",
           width: "30%",
-          alignItems: "center",
-          flex: "center ",
         }}
       >
         Brew My Coffee ☕
@@ -60,7 +58,6 @@ function App() {
       <UserWelcome name={"bilal"} />
       <Drinks />
       <RobotStatus status="Ready" />
-
 
       <BrewButton />
     </>
