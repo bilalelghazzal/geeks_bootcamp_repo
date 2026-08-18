@@ -1,7 +1,6 @@
 import BuggyCounter from "./Exercice1/BuggyCounter.jsx";
 import ErrorBoundary from "./Exercice1/ErrorBoundary.jsx";
 
-
 function App() {
   return (
     <div>
