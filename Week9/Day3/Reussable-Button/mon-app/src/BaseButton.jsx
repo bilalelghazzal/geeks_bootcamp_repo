@@ -36,7 +36,7 @@ function BaseButton({
       action(event);
     }
   };
-
+  //
   return (
     <button
       type={type}
