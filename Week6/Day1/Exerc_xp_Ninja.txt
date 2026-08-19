@@ -1,0 +1,57 @@
+
+
+==Retrieve all films with a rating of G or PG that are not currently rented
+
+SELECT DISTINCT f.film_id, f.title, f.rating
+FROM film AS f
+WHERE f.rating IN ('G', 'PG')
+  AND NOT EXISTS (
+      SELECT 1
+      FROM inventory AS i
+      JOIN rental AS r
+        ON r.inventory_id = i.inventory_id
+      WHERE i.film_id = f.film_id
+        AND r.return_date IS NULL
+  );
+
+== Create a waiting list table for children’s DVDs
+
+The table should reference:
+- film(film_id) to know which movie the child is waiting for
+- inventory(inventory_id) to know which DVD copy is being waited for
+- customer(customer_id) to know which child/customer is on the list
+
+CREATE TABLE children_movie_waitlist (
+    waitlist_id SERIAL PRIMARY KEY,
+    film_id INT NOT NULL,
+    inventory_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_waitlist_film
+        FOREIGN KEY (film_id) REFERENCES film(film_id),
+    CONSTRAINT fk_waitlist_inventory
+        FOREIGN KEY (inventory_id) REFERENCES inventory(inventory_id),
+    CONSTRAINT fk_waitlist_customer
+        FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+);
+
+==Retrieve the number of people waiting for each children’s DVD
+
+SELECT f.title AS movie_title,
+       COUNT(DISTINCT w.customer_id) AS waiting_count
+FROM film AS f
+LEFT JOIN inventory AS i
+    ON i.film_id = f.film_id
+LEFT JOIN children_movie_waitlist AS w
+    ON w.inventory_id = i.inventory_id
+WHERE f.rating IN ('G', 'PG')
+GROUP BY f.title
+ORDER BY waiting_count DESC, f.title;
+
+
+INSERT INTO children_movie_waitlist (film_id, inventory_id, customer_id)
+VALUES
+    (1, 1, 1),
+    (1, 1, 2),
+    (2, 2, 3);
+

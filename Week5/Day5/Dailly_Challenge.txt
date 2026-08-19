@@ -1,0 +1,162 @@
+-- ============================================
+-- DAILY CHALLENGE - SQL PUZZLE
+-- ============================================
+
+-- ============================================
+-- 1. Create FirstTab
+-- ============================================
+
+CREATE TABLE FirstTab (
+    id INTEGER,
+    name VARCHAR(10)
+);
+
+INSERT INTO FirstTab VALUES
+    (5, 'Pawan'),
+    (6, 'Sharlee'),
+    (7, 'Krish'),
+    (NULL, 'Avtaar');
+
+
+-- ============================================
+-- 2. Create SecondTab
+-- ============================================
+
+CREATE TABLE SecondTab (
+    id INTEGER
+);
+
+INSERT INTO SecondTab VALUES
+    (5),
+    (NULL);
+
+
+-- ============================================
+-- DATA
+-- ============================================
+
+SELECT * FROM FirstTab;
+
+SELECT * FROM SecondTab;
+
+
+-- ============================================
+-- Q1
+-- ============================================
+
+-- Query:
+-- SELECT COUNT(*)
+-- FROM FirstTab AS ft
+-- WHERE ft.id NOT IN (
+--     SELECT id
+--     FROM SecondTab
+--     WHERE id IS NULL
+-- );
+
+-- Subquery returns:
+-- NULL
+--
+-- ft.id NOT IN (NULL)
+-- means:
+-- ft.id <> NULL
+--
+-- Any comparison with NULL is UNKNOWN.
+--
+-- Therefore no rows match.
+--
+-- EXPECTED OUTPUT: 0
+
+SELECT COUNT(*) AS Q1
+FROM FirstTab AS ft
+WHERE ft.id NOT IN (
+    SELECT id
+    FROM SecondTab
+    WHERE id IS NULL
+);
+
+
+-- ============================================
+-- Q2
+-- ============================================
+
+-- Subquery returns:
+-- 5
+--
+-- ft.id NOT IN (5)
+-- means:
+-- ft.id <> 5
+--
+-- Matching rows:
+-- 6
+-- 7
+--
+-- The row with NULL does not match because
+-- NULL <> 5 is UNKNOWN.
+--
+-- EXPECTED OUTPUT: 2
+
+SELECT COUNT(*) AS Q2
+FROM FirstTab AS ft
+WHERE ft.id NOT IN (
+    SELECT id
+    FROM SecondTab
+    WHERE id = 5
+);
+
+
+-- ============================================
+-- Q3
+-- ============================================
+
+-- Subquery returns:
+-- 5
+-- NULL
+--
+-- NOT IN with a NULL is dangerous:
+--
+-- ft.id NOT IN (5, NULL)
+--
+-- is equivalent to:
+--
+-- ft.id <> 5
+-- AND
+-- ft.id <> NULL
+--
+-- The second condition is UNKNOWN.
+--
+-- Therefore no row satisfies the WHERE condition.
+--
+-- EXPECTED OUTPUT: 0
+
+SELECT COUNT(*) AS Q3
+FROM FirstTab AS ft
+WHERE ft.id NOT IN (
+    SELECT id
+    FROM SecondTab
+);
+
+
+-- ============================================
+-- Q4
+-- ============================================
+
+-- Subquery returns only:
+-- 5
+--
+-- because id IS NOT NULL removes NULL.
+--
+-- ft.id NOT IN (5)
+--
+-- Matching rows:
+-- 6
+-- 7
+--
+-- EXPECTED OUTPUT: 2
+
+SELECT COUNT(*) AS Q4
+FROM FirstTab AS ft
+WHERE ft.id NOT IN (
+    SELECT id
+    FROM SecondTab
+    WHERE id IS NOT NULL
+);

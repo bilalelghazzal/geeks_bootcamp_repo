@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Challenge: Mad Libs</title>
+ </head>
+ <body>
+
+    <h1>Mad Libs</h1>
+
+    <form id="libform">
+        <label for="noun">Noun:</label><input type="text" id="noun"><br>
+        <label for="adjective">Adjective:</label><input type="text" id="adjective"><br>
+        <label for="person">Someone's Name:</label><input type="text" id="person"><br>
+        <label for="verb">Verb:</label><input type="text" id="verb"><br>
+        <label for="place">A place:</label><input type="text" id="place"><br>
+        <button id="lib-button">Lib it!</button>
+    </form>
+
+    <p>Generated story: 
+    <span id="story"></span>
+    </p>
+
+    <script>
+    // shuffle 
+    const shuffleBtn = document.createElement("button");
+    shuffleBtn.id = "shuffle-btn";
+    shuffleBtn.textContent = "Shuffle Story!";
+    document.getElementById("libform").insertAdjacentElement("afterend", shuffleBtn);
+
+    // Story template declare it as object : 
+    const storyTemplates = [
+        (noun, adjective, person, verb, place) => `${person} went to the ${adjective} ${place} with a ${noun}. There, ${person} decided to ${verb} all day!`,
+        (noun, adjective, person, verb, place) => `Once upon a time in a ${adjective} ${place}, ${person} saw a mysterious ${noun} and tried to ${verb} it.`,
+        (noun, adjective, person, verb, place) => `It was a ${adjective} day when ${person} brought a ${noun} to the ${place} and started to ${verb} uncontrollably.`,
+        (noun, adjective, person, verb, place) => `Everyone at the ${adjective} ${place} was shocked when ${person} began to ${verb} with a ${noun}.`,
+        (noun, adjective, person, verb, place) => `“${verb} that ${noun}!” yelled ${person} at the ${adjective} ${place}.`,
+    ];
+
+    //  avoid immediate repetition if possible
+    let lastStoryIndex = -1;
+
+    //  (initialize with empty):
+    let currentInputs = {
+        noun: "",
+        adjective: "",
+        person: "",
+        verb: "",
+        place: ""
+    };
+
+    function getStoryIndexRandom() {
+        if (storyTemplates.length < 2) return 0;
+        let idx;
+        do {
+            idx = Math.floor(Math.random() * storyTemplates.length);
+        } while (idx === lastStoryIndex);
+        lastStoryIndex = idx;
+        return idx;
+    }
+
+    function displayRandomStory(inputs) {
+        const { noun, adjective, person, verb, place } = inputs;
+        const idx = getStoryIndexRandom();
+        const story = storyTemplates[idx](noun, adjective, person, verb, place);
+        document.getElementById("story").textContent = story;
+    }
+
+    document.getElementById("libform").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Get the input elements
+        const noun = document.getElementById("noun").value.trim();
+        const adjective = document.getElementById("adjective").value.trim();
+        const person = document.getElementById("person").value.trim();
+        const verb = document.getElementById("verb").value.trim();
+        const place = document.getElementById("place").value.trim();
+
+        // Make sure the values are not empty
+        if (!noun || !adjective || !person || !verb || !place) {
+            alert("Please fill in all the fields.");
+            return;
+        }
+
+        // Store the inputs for shuffling
+        currentInputs = { noun, adjective, person, verb, place };
+
+        // Pick and display a random story
+        displayRandomStory(currentInputs);
+    });
+
+    shuffleBtn.addEventListener("click", function() {
+        if (
+            currentInputs.noun &&
+            currentInputs.adjective &&
+            currentInputs.person &&
+            currentInputs.verb &&
+            currentInputs.place
+        ) {
+            displayRandomStory(currentInputs);
+        } else {
+            alert("Please submit the form with all fields filled before shuffling the story.");
+        }
+    });
+
+
+    </script>
+
+ </body>
+</html>

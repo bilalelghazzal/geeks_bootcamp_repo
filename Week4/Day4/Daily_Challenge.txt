@@ -1,0 +1,62 @@
+// == Task 1: Inventory Setup===============================
+
+db.products.insertMany([
+  {
+    name: "4K Smart TV",
+    category: "Electronics",
+    price: 799.99,
+    stock: 12,
+    brand: "Samsung"
+  },
+  {
+    name: "Wireless Noise-Cancelling Headphones",
+    category: "Electronics",
+    price: 249.99,
+    stock: 3,         
+    brand: "Sony"
+  },
+  {
+    name: "Robot Vacuum Cleaner",
+    category: "Home",
+    price: 349.99,
+    stock: 18,
+    brand: "iRobot"
+  },
+  {
+    name: "Ballpoint Pen Set (50-pack)",
+    category: "Stationery",
+    price: 12.99,
+    stock: 100,        // ✅ Very high stock
+    brand: "BIC"
+  },
+  {
+    name: "Leather-Bound Notebook",
+    category: "Stationery",
+    price: 24.99,
+    stock: 7,          // ⚠️ Low stock
+    brand: "Moleskine"
+  }
+])
+
+// Task 2================================================================
+
+db.products.find(
+  { stock: { $lt: 10 } },
+  { name: 1, category: 1, stock: 1, _id: 0 }  // Project only useful fields
+)
+
+// Task 3================================================================
+
+db.products.updateMany(
+  { category: "Electronics" },   // Filter: target only Electronics
+  { $mul: { price: 1.1 } }       // Update: multiply price × 1.1
+)
+
+
+//  Final Verifecation ================================================================
+
+db.products.find(
+  {},
+  { name: 1, category: 1, price: 1, _id: 0 }
+).sort({ price: -1 }).limit(1)
+

@@ -1,0 +1,31 @@
+=========================================Exercise 1: The Enrollment Phase============================
+
+db.students.insertMany([
+  { name: "Yassine", age: 19, city: "Rabat", major: "AI" },
+  { name: "Sophia", age: 26, city: "Paris", major: "Cybersecurity" },
+  { name: "Kaito", age: 22, city: "Tokyo", major: "Web Dev" },
+  { name: "Elena", age: 31, city: "Madrid", major: "Data Science" },
+  { name: "Marcus", age: 24, city: "New York", major: "AI" }
+])
+
+========================================Exercise 2: Data Intelligence===========================
+============= Task A : 
+
+db.students.find({
+  age: { $gte: 18, $lte: 25 }
+})
+
+=========== Task B : 
+
+db.students.updateOne(
+  { name: "Yassine" },        // Filter: target Yassine specifically
+  { $set: { city: "Casablanca" } }  // Update: overwrite city only
+)
+
+====== Task C : 
+
+db.students.deleteOne(
+  { name: "Sophia" }
+)
+
+

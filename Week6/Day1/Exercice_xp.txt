@@ -1,0 +1,100 @@
+-- 1. Get a list of all customers, showing first_name and last_name concatenated as full_name
+SELECT first_name || ' ' || last_name AS full_name 
+FROM customer;
+
+-- 2. Get the unique created_date values from the customer table
+SELECT DISTINCT create_date 
+FROM customer;
+
+-- 3. Get all customer details, sorted by first_name descending (Z to A)
+SELECT * 
+FROM customer 
+ORDER BY first_name DESC;
+
+-- 4. Get active films, showing film_id, title, description, release_year, and rental_rate sorted by rental_rate ascending
+SELECT film_id, title, description, release_year, rental_rate 
+FROM film 
+ORDER BY rental_rate ASC;
+
+-- 5. Get the address and phone number of all customers living in 'Texas' (requires joining customer -> address)
+SELECT customer.first_name, customer.last_name, address.address, address.phone, address.district
+FROM customer
+INNER JOIN address ON customer.address_id = address.address_id
+WHERE address.district = 'Texas';
+
+-- 6. Get all details of the film with film_id 15 or 150
+SELECT * 
+FROM film 
+WHERE film_id IN (15, 150);
+
+-- 7. Check if your favorite film exists in the database by searching for its title
+SELECT film_id, title, description, length, rental_rate 
+FROM film 
+WHERE title ILIKE '%Academy Dinosaur%'; -- Use ILIKE for case-insensitive matches
+
+-- 8. Find all films whose rental rate is less than $1.00
+SELECT film_id, title, rental_rate 
+FROM film 
+WHERE rental_rate < 1.00;
+
+-- 9. Get the top 10 cheapest rental rates
+SELECT film_id, title, rental_rate 
+FROM film 
+ORDER BY rental_rate ASC 
+LIMIT 10;
+
+-- 10. Get the output of the next 10 cheapest films (skipping the first 10 using OFFSET)
+SELECT film_id, title, rental_rate 
+FROM film 
+ORDER BY rental_rate ASC 
+LIMIT 10 OFFSET 10;
+
+-- 11. Find the customer first name, last name, and the amount paid, joined with payment
+SELECT customer.first_name, customer.last_name, payment.amount, payment.payment_date
+FROM customer
+INNER JOIN payment ON customer.customer_id = payment.customer_id
+ORDER BY payment.payment_id ASC;
+
+-- 12. List all films that are NOT currently in stock (not present in the inventory table)
+SELECT film.film_id, film.title 
+FROM film
+LEFT JOIN inventory ON film.film_id = inventory.film_id
+WHERE inventory.inventory_id IS NULL;
+
+-- 13. Find which city is in which country (requires joining city -> country)
+SELECT city.city, country.country
+FROM city
+INNER JOIN country ON city.country_id = country.country_id;
+
+
+
+
+---------------------
+
+
+-- 1. Create a "purchases" table to link items and customers (Many-to-Many Relationship)
+CREATE TABLE purchases (
+    purchase_id SERIAL PRIMARY KEY,
+    customer_id INTEGER REFERENCES customers(customer_id) ON DELETE CASCADE,
+    item_id INTEGER REFERENCES items(item_id) ON DELETE CASCADE,
+    quantity_purchased INTEGER NOT NULL DEFAULT 1
+);
+
+-- 2. Insert test purchases
+INSERT INTO purchases (customer_id, item_id, quantity_purchased) VALUES
+(1, 2, 1), -- Customer 1 bought Item 2
+(2, 1, 2), -- Customer 2 bought 2 of Item 1
+(3, 3, 1); -- Customer 3 bought Item 3
+
+-- 3. Select all items purchased, including customer first_name and last_name
+SELECT customers.first_name, customers.last_name, items.item_name, items.item_price
+FROM purchases
+INNER JOIN customers ON purchases.customer_id = customers.customer_id
+INNER JOIN items ON purchases.item_id = items.item_id;
+
+-- 4. Get purchases made by a specific customer ID (e.g., customer_id = 5)
+SELECT customers.first_name, customers.last_name, items.item_name
+FROM purchases
+INNER JOIN customers ON purchases.customer_id = customers.customer_id
+INNER JOIN items ON purchases.item_id = items.item_id
+WHERE purchases.customer_id = 5;

@@ -1,0 +1,53 @@
+-- Create users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- Create product_orders table
+CREATE TABLE product_orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_product_orders_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Create items table
+CREATE TABLE items (
+    id SERIAL PRIMARY KEY,
+    product_order_id INT NOT NULL,
+    item_name VARCHAR(100) NOT NULL,
+    price NUMERIC(10, 2) NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    CONSTRAINT fk_items_order
+        FOREIGN KEY (product_order_id) REFERENCES product_orders(id)
+);
+
+-- Function to return the total price for a given order
+CREATE OR REPLACE FUNCTION get_order_total(p_order_id INT)
+RETURNS NUMERIC AS $$
+BEGIN
+    RETURN COALESCE(
+        (SELECT SUM(price * quantity)
+         FROM items
+         WHERE product_order_id = p_order_id),
+        0
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+-- Bonus: Function to return the total price for a given order of a given user
+CREATE OR REPLACE FUNCTION get_user_order_total(p_user_id INT, p_order_id INT)
+RETURNS NUMERIC AS $$
+BEGIN
+    RETURN COALESCE(
+        (SELECT SUM(i.price * i.quantity)
+         FROM items i
+         JOIN product_orders po ON po.id = i.product_order_id
+         WHERE po.id = p_order_id AND po.user_id = p_user_id),
+        0
+    );
+END;
+$$ LANGUAGE plpgsql;

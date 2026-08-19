@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Project - Robot</title>
+    <link href="https://fonts.cdnfonts.com/css/sega-logo-font" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: sans-serif;
+            background-color: #512da8;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #4caf50;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1rem 2rem;
+        }
+
+        header h1 {
+            font-family: 'SEGA LOGO FONT', sans-serif;
+            color: white;
+            font-size: 1.8rem;
+            white-space: nowrap;
+        }
+
+        /* FIX: search input is outside <form> so no accidental page reload */
+        #search {
+            padding: .6rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 500px;
+            outline: none;
+        }
+
+        /* ── CARD GRID ── */
+        #corp {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+           .card {
+            background-color: #26c6da;
+            border-radius: 12px;
+            padding: 1.2rem;
+            width: 220px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #263238;
+            display: block;
+            margin: 0 auto .8rem;
+        }
+
+        .card h2 {
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: .3rem;
+            color: #1a1a2e;
+        }
+
+        .card p {
+            font-size: .78rem;
+            color: #37474f;
+        }
+
+        #no-results {
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 100%;
+            padding: 3rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ROBOFRIENDS</h1>
+        <input type="text" id="search" placeholder="Search Robots..." />
+    </header>
+
+    <div id="corp">
+        <p id="no-results">No robots found</p>
+    </div>
+
+    <script>
+        const robots = [
+            { id: 1,  name: 'Leanne Graham',          email: 'Sincere@april.biz',           image: 'https://robohash.org/1?200x200' },
+            { id: 2,  name: 'Ervin Howell',            email: 'Shanna@melissa.tv',           image: 'https://robohash.org/2?200x200' },
+            { id: 3,  name: 'Clementine Bauch',        email: 'Nathan@yesenia.net',          image: 'https://robohash.org/3?200x200' },
+            { id: 4,  name: 'Patricia Lebsack',        email: 'Julianne.OConner@kory.org',   image: 'https://robohash.org/4?200x200' },
+            { id: 5,  name: 'Chelsey Dietrich',        email: 'Lucio_Hettinger@annie.ca',    image: 'https://robohash.org/5?200x200' },
+            { id: 6,  name: 'Mrs. Dennis Schulist',    email: 'Karley_Dach@jasper.info',     image: 'https://robohash.org/6?200x200' },
+            { id: 7,  name: 'Kurtis Weissnat',         email: 'Telly.Hoeger@billy.biz',      image: 'https://robohash.org/7?200x200' },
+            { id: 8,  name: 'Nicholas Runolfsdottir',  email: 'Sherwood@rosamond.me',        image: 'https://robohash.org/8?200x200' },
+            { id: 9,  name: 'Glenna Reichert',         email: 'Chaim_McDermott@dana.io',     image: 'https://robohash.org/9?200x200' },
+            { id: 10, name: 'Clementina DuBuque',      email: 'Rey.Padberg@karina.biz',      image: 'https://robohash.org/10?200x200' },
+        ];
+
+        const corp      = document.getElementById('corp');
+        const searchBox = document.getElementById('search');
+        const noResults = document.getElementById('no-results');
+
+        // Fix function name to camelCase and logic errors inside
+        function createCard(robot) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+        
+            const img = document.createElement('img');
+            img.src = robot.image; // fixed reference, was robots.image
+            img.alt = robot.name;  // fixed, was robots.name
+
+            const h2 = document.createElement('h2');
+            h2.textContent = robot.name;
+
+            const p = document.createElement('p');
+            p.textContent = robot.email;
+
+            card.appendChild(img);
+            card.appendChild(h2);
+            card.appendChild(p);
+            return card;
+        }
+
+        // Render list of cards
+        function renderCards(list) {
+            corp.querySelectorAll('.card').forEach(c => c.remove());
+
+            if (list.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            list.forEach(robot => corp.appendChild(createCard(robot)));
+        }
+
+        // Filter on every keystroke // 
+        searchBox.addEventListener('input', () => {
+            const query = searchBox.value.toLowerCase();
+            
+            const filtered = robots.filter(r => r.name.toLowerCase().includes(query));
+            renderCards(filtered);
+        });
+
+        renderCards(robots);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+
+Result · HTML
+Copier
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <section id="output"></section>
+
+    <script>
+        // Read parametrs
+        const params = new URLSearchParams(window.location.search);
+        const firstname = params.get('firstname');
+        const lastname  = params.get('lastname');
+
+        // display the data 
+        const section = document.getElementById('output');
+        section.textContent = `Hello, ${firstname} ${lastname}!`;
+    </script>
+</body>
+</html>
