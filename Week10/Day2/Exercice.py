@@ -17,9 +17,9 @@ user_name = input("What is your name? ")
 my_name = "Qwen"
 
 if user_name.lower() == my_name.lower():
-    print("Wow! We have the same name! Great minds think alike! 😎")
+    print("Wow! We have the same name! Great minds think alike! ")
 else:
-    print(f"Nice to meet you, {user_name}! I'm {my_name}. Different names, but we can still be friends! 🤝")
+    print(f"Nice to meet you, {user_name}! I'm {my_name}. Different names, but we can still be friends! ")
 
 # ============================================
 # Exercise 4: Tall enough to ride a roller coaster
@@ -30,7 +30,7 @@ try:
     if height > 145:
         print("You are tall enough to ride the roller coaster! 🎢 Enjoy!")
     else:
-        print("Sorry, you need to grow some more to ride. Keep eating your vegetables! 🥦")
+        print("Sorry, you need to grow some more to ride. Keep eating your vegetables! ")
 except ValueError:
     print("Please enter a valid number for height.")
 
@@ -147,3 +147,4 @@ while sandwich_orders:
 print("\nFinished sandwiches:")
 for sandwich in finished_sandwiches:
     print(f"I made your {sandwich.lower()}.")
+
