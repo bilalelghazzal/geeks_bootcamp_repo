@@ -43,19 +43,19 @@ while True:
     
     # Check if the sentence contains 'a' or 'A'
     if 'a' in sentence.lower():
-        print("❌ Oops! Your sentence contains the letter 'A'. Try again!")
+        print(" Oops! Your sentence contains the letter 'A'. Try again!")
         continue
     
     current_length = len(sentence)
     
     if current_length > longest_length:
         longest_length = current_length
-        print(f"🎉 Congratulations! New record: {current_length} characters!")
+        print(f" Congratulations! New record: {current_length} characters!")
         print(f"   \"{sentence}\"")
     elif current_length == longest_length:
-        print(f"😐 You tied your record of {current_length} characters. Try to beat it!")
+        print(f"You tied your record of {current_length} characters. Try to beat it!")
     else:
-        print(f"😕 That's only {current_length} characters. Your best is {longest_length}. Keep trying!")
+        print(f" That's only {current_length} characters. Your best is {longest_length}. Keep trying!")
 
 print("\n" + "=" * 60)
 
@@ -73,7 +73,7 @@ programming. Many companies use Python for web development, data science, artifi
 and automation. Its extensive standard library and active community contribute to its widespread 
 adoption across industries worldwide."""
 
-print(f"\n📝 PARAGRAPH:\n\"{paragraph}\"\n")
+print(f"\n PARAGRAPH:\n\"{paragraph}\"\n")
 
 # Basic metrics
 char_count = len(paragraph)
@@ -101,14 +101,14 @@ avg_words_per_sentence = word_count / sentence_count if sentence_count > 0 else 
 non_unique_word_count = word_count - unique_word_count
 
 # Display results
-print("📊 ANALYSIS RESULTS:")
+print(" ANALYSIS RESULTS:")
 print("-" * 40)
 print(f"Total characters:            {char_count}")
 print(f"Sentences:                   {sentence_count}")
 print(f"Words:                       {word_count}")
 print(f"Unique words:                {unique_word_count}")
 print("-" * 40)
-print(f"✨ Non-whitespace chars:     {non_whitespace_count}")
-print(f"✨ Avg words per sentence:   {avg_words_per_sentence:.2f}")
-print(f"✨ Non-unique words:         {non_unique_word_count}")
+print(f" Non-whitespace chars:     {non_whitespace_count}")
+print(f" Avg words per sentence:   {avg_words_per_sentence:.2f}")
+print(f" Non-unique words:         {non_unique_word_count}")
 print("-" * 40)
