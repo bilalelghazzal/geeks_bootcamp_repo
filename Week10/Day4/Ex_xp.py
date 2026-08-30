@@ -1,6 +1,4 @@
-# ============================================
-# Exercise 1: Cats - Find the Oldest
-# ============================================
+
 print("--- Exercise 1: Cats ---")
 
 
@@ -15,7 +13,7 @@ def find_oldest_cat(cats):
     return max(cats, key=lambda cat: cat.age)
 
 
-# Instantiate three cats
+
 cat1 = Cat("Whiskers", 5)
 cat2 = Cat("Mittens", 12)
 cat3 = Cat("Shadow", 8)
@@ -28,9 +26,7 @@ print(f"The oldest cat is {oldest.name}, and is {oldest.age} years old.")
 print("\n" + "=" * 50 + "\n")
 
 
-# ============================================
-# Exercise 2: Dogs - Bark, Jump & Compare
-# ============================================
+
 print("--- Exercise 2: Dogs ---")
 
 
@@ -47,7 +43,7 @@ class Dog:
         print(f"{self.name} jumps {jump_height} cm high!")
 
 
-# David's dog
+
 davids_dog = Dog("Rex", 50)
 print(f"David's dog: {davids_dog.name}, {davids_dog.height}cm")
 davids_dog.bark()
@@ -55,7 +51,6 @@ davids_dog.jump()
 
 print()
 
-# Sarah's dog
 sarahs_dog = Dog("Teacup", 20)
 print(f"Sarah's dog: {sarahs_dog.name}, {sarahs_dog.height}cm")
 sarahs_dog.bark()
@@ -75,8 +70,7 @@ print("\n" + "=" * 50 + "\n")
 
 
 # ============================================
-# Exercise 3: Song Lyrics
-# ============================================
+
 print("--- Exercise 3: Song Producer ---")
 
 
@@ -100,9 +94,7 @@ stairway.sing_me_a_song()
 print("\n" + "=" * 50 + "\n")
 
 
-# ============================================
-# Exercise 4: Afternoon at the Zoo
-# ============================================
+
 print("--- Exercise 4: Zoo Manager ---")
 
 
@@ -149,7 +141,7 @@ class Zoo:
                 groups[first_letter] = []
             groups[first_letter].append(animal)
 
-        # Convert single-item lists to plain strings per the example format
+       
         result = {}
         for letter in sorted(groups.keys()):
             if len(groups[letter]) == 1:
@@ -170,16 +162,16 @@ class Zoo:
 # --- Test Zoo ---
 new_york_zoo = Zoo("New York Zoo")
 
-# Interactive-style additions
 animals_to_add = ["Giraffe", "Ape", "Baboon", "Bear", "Cat", "Cougar", "Eel", "Emu", "Giraffe"]
 for animal in animals_to_add:
     new_york_zoo.add_animal(animal)
 
 new_york_zoo.get_animals()
 
-# Sell an animal
+
 new_york_zoo.sell_animal("Eel")
-new_york_zoo.sell_animal("Penguin")  # Not in zoo
+new_york_zoo.sell_animal("Penguin") 
 
 new_york_zoo.get_animals()
 new_york_zoo.get_groups()
+##
