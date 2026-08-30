@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.converter-container {
+    background: #fff;
+    padding: 2rem 2.5rem 2.5rem 2.5rem;
+    margin: 60px auto 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(44, 56, 81, 0.11);
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.converter-title {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    color: #183153;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+form label {
+    margin-top: 1rem;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: #3b3f54;
+    display: block;
+}
+
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 0.55em 0.7em;
+    border-radius: 7px;
+    border: 1px solid #b8b9ba;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    background: #ffffff;
+    color: #050811;
+    box-sizing: border-box;
+    appearance: none;
+}
+
+form input[type="number"]:focus,
+form select:focus {
+    outline: none;
+    border-color: #1f5992;
+    background: #fefefe;
+}
+
+.switch-currencies {
+    text-align: center;
+    margin: 0.8em 0 1em 0;
+}
+
+.switch-btn {
+    background: #e1e7f7;
+    border: none;
+    border-radius: 60%;
+    font-size: 1.6rem;
+    width: 2.4em;
+    height: 2.4em;
+    cursor: pointer;
+    color: #406af7;
+    box-shadow: 0 2px 6px rgba(44, 56, 81, 0.08);
+    display: flex;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.switch-btn:hover {
+    background: #d1dbff;
+}
+
+form button[type="submit"] {
+    background: #3b54f7;
+    color: #fff;
+    border: #3b3f54;
+    border-radius: 6px;
+    font-size: large;
+    padding: 10px;
+    font-weight: 600;
+    margin-top: 0.3em;
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgba(44, 56, 81, 0.07);
+    transition: background 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+form button[type="submit"]:hover {
+    background: #284fd1;
+}
+
+.result {
+    margin-top: 1.6em;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #287638;
+    font-weight: 500;
+    min-height: 2em;
+}
+
+@media (max-width: 500px) {
+    .converter-container {
+        max-width: 97vw;
+        padding: 1.3rem 0.9rem 2rem 0.9rem;
+    }
+
+    .converter-title {
+        font-size: 1.1rem;
+    }
+}

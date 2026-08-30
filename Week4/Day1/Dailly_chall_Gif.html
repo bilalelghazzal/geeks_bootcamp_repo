@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Giphy Search</title>
+    <style>
+        .gif-wrapper {
+            display: inline-block;
+            margin: 10px;
+            position: relative;
+            text-align: center;
+        }
+        .gif-wrapper img {
+            max-width: 200px;
+            display: block;
+        }
+        .delete-btn {
+            margin-top: 5px;
+            display: block;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #delete-all-btn {
+            background: #b71c1c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <form id="gif-form">
+        <label for="gif-category">Search for a GIF category:</label>
+        <input type="text" name="category" id="gif-category" required>
+        <button type="submit">Submit</button>
+    </form>
+    <button id="delete-all-btn">DELETE ALL</button>
+    <section id="gif-section"></section>
+    <script>
+        const apiKey = "hpvZycW22qCjn5cRM1xtWB8NKq4dQ2My";
+        const form = document.getElementById('gif-form');
+        const gifSection = document.getElementById('gif-section');
+        const deleteAllBtn = document.getElementById('delete-all-btn');
+
+        // Hide DELETE ALL button initially
+        deleteAllBtn.style.display = 'none';
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const category = document.getElementById('gif-category').value.trim();
+            if (!category) return;
+
+            try {
+                const res = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=${encodeURIComponent(category)}`);
+                if (!res.ok) throw new Error('Network response was not ok');
+                const data = await res.json();
+
+                if (!data.data || !data.data.images || !data.data.images.original || !data.data.images.original.url) {
+                    alert('No GIF found for this category.');
+                    return;
+                }
+
+                const gifUrl = data.data.images.original.url;
+
+                // Create gif wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = 'gif-wrapper';
+
+                // Create img
+                const img = document.createElement('img');
+                img.src = gifUrl;
+                img.alt = data.data.title || category;
+
+                // Create delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'DELETE';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.addEventListener('click', function() {
+                    wrapper.remove();
+                    toggleDeleteAllBtn();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(deleteBtn);
+                gifSection.appendChild(wrapper);
+
+                toggleDeleteAllBtn();
+                form.reset();
+            } catch (error) {
+                alert("Error fetching gif: " + error.message);
+            }
+        });
+
+        // Delete all gifs
+        deleteAllBtn.addEventListener('click', function() {
+            gifSection.innerHTML = '';
+            toggleDeleteAllBtn();
+        });
+
+        function toggleDeleteAllBtn() {
+            deleteAllBtn.style.display = gifSection.children.length > 0 ? 'inline-block' : 'none';
+        }
+    </script>
+</body>
+</html>

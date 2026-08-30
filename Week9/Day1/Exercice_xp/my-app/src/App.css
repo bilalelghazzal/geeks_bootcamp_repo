@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.app.light {
+  background: #f5f7fb;
+  color: #18213a;
+}
+
+.app.dark {
+  background: #18213a;
+  color: #eef2ff;
+}
+
+.theme-panel {
+  width: min(420px, 90vw);
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid #c9d1dd;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.44);
+}
+
+.app.dark .theme-panel {
+  border-color: #52607a;
+  background: rgba(30, 39, 59, 0.88);
+}
+
+.theme-button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #2341a5;
+  color: white;
+}
+
+.app.dark .theme-button {
+  background: #f4b942;
+  color: #1b1631;
+}

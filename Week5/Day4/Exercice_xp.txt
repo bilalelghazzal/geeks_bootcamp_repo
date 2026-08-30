@@ -1,0 +1,50 @@
+
+CREATE DATABASE First_Db;
+
+-- 1. Create the items table
+CREATE TABLE items (
+    item_id SERIAL PRIMARY KEY,
+    item_name VARCHAR(100) NOT NULL,
+    price INTEGER NOT NULL
+);
+
+-- 2. Create the customers table
+CREATE TABLE customers (
+    customer_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
+);
+
+-- 3. Insert Items
+INSERT INTO items (item_name, price) VALUES 
+('Small Desk', 100),
+('Large desk', 300),
+('Fan', 80);
+
+-- 4. Insert Customers
+INSERT INTO customers (first_name, last_name) VALUES 
+('Greg', 'Jones'),
+('Sandra', 'Jones'),
+('Scott', 'Scott'),
+('Trevor', 'Green'),
+('Melanie', 'Johnson');
+
+-- 5
+
+-- All items
+SELECT * FROM items;
+
+-- Items with price > 80
+SELECT * FROM items WHERE price > 80;
+
+-- Items with price <= 300
+SELECT * FROM items WHERE price <= 300;
+
+-- Customers with last name 'Smith'
+SELECT * FROM customers WHERE last_name = 'Smith';
+
+-- Customers with last name 'Jones'
+SELECT * FROM customers WHERE last_name = 'Jones';
+
+-- Customers whose first name is NOT 'Scott'
+SELECT * FROM customers WHERE first_name != 'Scott';

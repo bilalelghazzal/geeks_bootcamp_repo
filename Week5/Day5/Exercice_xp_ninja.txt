@@ -1,0 +1,104 @@
+/* =========================================================
+   EXERCISE 1 - BONUS PUBLIC DATABASE
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Fetch the last 2 customers in alphabetical order (A-Z)
+   Exclude the id column
+   --------------------------------------------------------- */
+
+SELECT first_name, last_name
+FROM customers
+ORDER BY last_name ASC, first_name ASC
+LIMIT 2;
+
+
+/* ---------------------------------------------------------
+   2. Delete all purchases made by Scott
+   --------------------------------------------------------- */
+
+DELETE FROM purchases
+WHERE customer_id = (
+    SELECT id
+    FROM customers
+    WHERE first_name = 'Scott'
+      AND last_name = 'Scott'
+);
+
+
+/* ---------------------------------------------------------
+   3. Does Scott still exist in the customers table?
+   --------------------------------------------------------- */
+
+SELECT *
+FROM customers
+WHERE first_name = 'Scott'
+  AND last_name = 'Scott';
+
+
+/*
+   Scott should still exist.
+
+   We deleted his PURCHASES, not the CUSTOMER himself.
+*/
+
+
+/* ---------------------------------------------------------
+   4. Find ALL purchases and JOIN with customers
+      Scott's order should appear,
+      but first_name and last_name should be empty.
+
+      Which JOIN?
+      -> LEFT JOIN
+   --------------------------------------------------------- */
+
+SELECT
+    p.id,
+    p.customer_id,
+    c.first_name,
+    c.last_name,
+    p.item_id,
+    p.quantity_purchased
+FROM purchases AS p
+LEFT JOIN customers AS c
+    ON p.customer_id = c.id;
+
+
+/*
+   IMPORTANT:
+   A LEFT JOIN keeps ALL rows from purchases,
+   even if there is no matching customer.
+
+   If the customer doesn't exist anymore,
+   c.first_name and c.last_name become NULL.
+*/
+
+
+/* ---------------------------------------------------------
+   5. Find ALL purchases and JOIN with customers
+      Scott's order should NOT appear.
+
+      Which JOIN?
+      -> INNER JOIN
+   --------------------------------------------------------- */
+
+SELECT
+    p.id,
+    p.customer_id,
+    c.first_name,
+    c.last_name,
+    p.item_id,
+    p.quantity_purchased
+FROM purchases AS p
+INNER JOIN customers AS c
+    ON p.customer_id = c.id;
+
+
+/*
+   INNER JOIN only returns rows where there is
+   a matching customer.
+
+   Therefore, a purchase whose customer no longer
+   exists in customers will NOT appear.
+*/

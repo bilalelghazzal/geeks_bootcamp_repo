@@ -1,0 +1,110 @@
+// 1
+let random = Math.floor(Math.random() * 100) + 1;
+console.log("Random number:", random);
+for (let i = 0; i <= random; i++) {
+  if (i % 2 === 0) console.log(i);
+}
+
+
+// 2
+function capitalize(str) {
+  let even = "";
+  let odd = "";
+  for (let i = 0; i < str.length; i++) {
+    if (i % 2 === 0) {
+      even += str[i].toUpperCase();
+      odd  += str[i];
+    } else {
+      even += str[i];
+      odd  += str[i].toUpperCase();
+    }
+  }
+  return [even, odd];
+}
+
+console.log(capitalize("abcdef"));
+
+
+// 3
+function isPalindrome(str) {
+  let reversed = str.split("").reverse().join("");
+  return str === reversed;
+}
+
+console.log(isPalindrome("madam")); // true
+console.log(isPalindrome("hello")); // false
+console.log(isPalindrome("kayak")); // true
+
+
+// =4
+function biggestNumberInArray(arr) {
+  let biggest = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (typeof arr[i] === "number" && arr[i] > biggest) {
+      biggest = arr[i];
+    }
+  }
+  return biggest;
+}
+
+console.log(biggestNumberInArray([-1, 0, 3, 100, 99, 2, 99])); // 100
+console.log(biggestNumberInArray(['a', 3, 4, 2]));              // 4
+console.log(biggestNumberInArray([]));                          // 0
+
+
+// 5
+function uniqueElements(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) === index);
+}
+
+console.log(uniqueElements([1, 2, 3, 3, 3, 3, 4, 5])); // [1,2,3,4,5]
+
+
+// 6
+// needs to be in html file : 
+/*function createCalendar(year, month) {
+  const table = document.createElement("table");
+  table.style.borderCollapse = "collapse";
+
+  const headerRow = document.createElement("tr");
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  days.forEach(day => {
+    const th = document.createElement("th");
+    th.textContent = day;
+    th.style.border = "1px solid black";
+    th.style.padding = "5px";
+    headerRow.appendChild(th);
+  });
+  table.appendChild(headerRow);
+
+  let firstDay = new Date(year, month - 1, 1).getDay();
+  firstDay = (firstDay === 0) ? 6 : firstDay - 1;
+
+  // total days in month
+  const totalDays = new Date(year, month, 0).getDate();
+
+  let day = 1;
+  while (day <= totalDays) {
+    const row = document.createElement("tr");
+
+    for (let i = 0; i < 7; i++) {
+      const td = document.createElement("td");
+      td.style.border = "1px solid black";
+      td.style.padding = "5px";
+      td.style.textAlign = "center";
+
+      if ((day === 1 && i < firstDay) || day > totalDays) {
+        td.textContent = "";
+      } else {
+        td.textContent = day;
+        day++;
+      }
+      row.appendChild(td);
+    }
+    table.appendChild(row);
+  }
+
+  document.body.appendChild(table);
+}
+
+createCalendar(2012, 9);*/

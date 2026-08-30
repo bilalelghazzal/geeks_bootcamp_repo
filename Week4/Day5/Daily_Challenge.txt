@@ -1,0 +1,50 @@
+==== Step 1 
+
+db.users.insertOne({
+  username: "kaito_dev",
+  bio: "Full-stack engineer. Coffee-driven. Open-source contributor.",
+  socialLinks: {
+    github:   "https://github.com/kaito_dev",
+    twitter:  "https://twitter.com/kaito_dev",
+    linkedin: "https://linkedin.com/in/kaito_dev"
+  }
+})
+==== Step 2 
+
+db.posts.insertOne({
+  title:    "Why MongoDB Outperforms SQL for Real-Time Apps",
+  body:     "When milliseconds matter, your database architecture is everything. Here's why document-based storage changes the game...",
+  tags:     ["mongodb", "database", "performance", "backend"],
+  authorId: ObjectId("64a1b2c3d4e5f6a7b8c9d0e1"),  
+  createdAt: new Date(),
+  comments: []   // starts empty
+})
+
+
+// User leaves a comment — push it directly into the post document
+db.posts.updateOne(
+  { _id: ObjectId("64b2c3d4e5f6a7b8c9d0e1f2") },
+  {
+    $push: {
+      comments: {
+        username:  "elena_codes",
+        text:      "Fantastic breakdown! The benchmark section really sold me.",
+        timestamp: new Date()
+      }
+    }
+  }
+)
+
+// A second comment arrives
+db.posts.updateOne(
+  { _id: ObjectId("64b2c3d4e5f6a7b8c9d0e1f2") },
+  {
+    $push: {
+      comments: {
+        username:  "marcus_js",
+        text:      "Have you benchmarked this against PostgreSQL with JSONB columns?",
+        timestamp: new Date()
+      }
+    }
+  }
+)

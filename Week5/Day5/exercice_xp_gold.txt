@@ -1,0 +1,535 @@
+/* =========================================================
+   EXERCISE 1 - DVD RENTAL
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Count how many films there are for each rating
+   --------------------------------------------------------- */
+
+SELECT
+    rating,
+    COUNT(*) AS total_films
+FROM film
+GROUP BY rating
+ORDER BY rating;
+
+
+/* ---------------------------------------------------------
+   2. Get all movies with rating G or PG-13
+   --------------------------------------------------------- */
+
+SELECT *
+FROM film
+WHERE rating IN ('G', 'PG-13');
+
+
+/* ---------------------------------------------------------
+   2.1 Filter:
+       - rating G or PG-13
+       - duration < 2 hours (120 minutes)
+       - rental_rate < 3.00
+       - alphabetical order
+   --------------------------------------------------------- */
+
+SELECT *
+FROM film
+WHERE rating IN ('G', 'PG-13')
+  AND length < 120
+  AND rental_rate < 3.00
+ORDER BY title ASC;
+
+
+/* ---------------------------------------------------------
+   3. Find a customer and change their details
+   --------------------------------------------------------- */
+
+/*
+   Example:
+   We choose customer with customer_id = 1.
+
+   Change the customer's information to your own details.
+*/
+
+UPDATE customer
+SET
+    first_name = 'Bilal',
+    last_name = 'GH',
+    email = 'bilal@example.com'
+WHERE customer_id = 1;
+
+
+/* Check the result */
+
+SELECT *
+FROM customer
+WHERE customer_id = 1;
+
+
+/* ---------------------------------------------------------
+   4. Find customer's address and change it
+   --------------------------------------------------------- */
+
+/*
+   The customer table contains address_id.
+   We first find the address ID.
+*/
+
+SELECT
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    c.address_id
+FROM customer AS c
+WHERE c.customer_id = 1;
+
+
+/*
+   Now update the corresponding address.
+
+   Example:
+*/
+
+UPDATE address
+SET
+    address = '123 My Street',
+    district = 'Rabat',
+    postal_code = '10000'
+WHERE address_id = (
+    SELECT address_id
+    FROM customer
+    WHERE customer_id = 1
+);
+
+
+/* Check the result */
+
+SELECT *
+FROM address
+WHERE address_id = (
+    SELECT address_id
+    FROM customer
+    WHERE customer_id = 1
+);
+
+
+
+/* =========================================================
+   EXERCISE 2 - STUDENTS TABLE
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   UPDATE
+   --------------------------------------------------------- */
+
+
+/*
+   1. Lea Benichou and Marc Benichou
+      should have birth_date = 02/11/1998
+*/
+
+UPDATE students
+SET birth_date = '1998-11-02'
+WHERE first_name = 'Lea'
+  AND last_name = 'Benichou';
+
+UPDATE students
+SET birth_date = '1998-11-02'
+WHERE first_name = 'Marc'
+  AND last_name = 'Benichou';
+
+
+/*
+   Or, alternatively, both can be updated in one query:
+   
+   UPDATE students
+   SET birth_date = '1998-11-02'
+   WHERE last_name = 'Benichou'
+     AND first_name IN ('Lea', 'Marc');
+*/
+
+
+/* ---------------------------------------------------------
+   2. Change David's last name from Grez to Guez
+   --------------------------------------------------------- */
+
+UPDATE students
+SET last_name = 'Guez'
+WHERE first_name = 'David'
+  AND last_name = 'Grez';
+
+
+
+/* ---------------------------------------------------------
+   DELETE
+   --------------------------------------------------------- */
+
+
+/* Delete Lea Benichou */
+
+DELETE FROM students
+WHERE first_name = 'Lea'
+  AND last_name = 'Benichou';
+
+
+
+/* ---------------------------------------------------------
+   COUNT
+   --------------------------------------------------------- */
+
+
+/*
+   1. Count how many students are in the table
+*/
+
+SELECT COUNT(*) AS total_students
+FROM students;
+
+
+/*
+   2. Count students born after 01/01/2000
+*/
+
+SELECT COUNT(*) AS students_born_after_2000
+FROM students
+WHERE birth_date > '2000-01-01';
+
+
+
+/* ---------------------------------------------------------
+   INSERT / ALTER
+   --------------------------------------------------------- */
+
+
+/*
+   1. Add math_grade column
+*/
+
+ALTER TABLE students
+ADD COLUMN math_grade INT;
+
+
+
+/*
+   2. Give student ID 1 a grade of 80
+*/
+
+UPDATE students
+SET math_grade = 80
+WHERE id = 1;
+
+
+
+/*
+   3. Give students ID 2 and 4 a grade of 90
+*/
+
+UPDATE students
+SET math_grade = 90
+WHERE id IN (2, 4);
+
+
+
+/*
+   4. Give student ID 6 a grade of 40
+*/
+
+UPDATE students
+SET math_grade = 40
+WHERE id = 6;
+
+
+
+/*
+   5. Count students with a grade bigger than 83
+*/
+
+SELECT COUNT(*) AS students_grade_above_83
+FROM students
+WHERE math_grade > 83;
+
+
+
+/*
+   6. Add Omer Simpson
+   with the same birth_date as the existing Omer Simpson.
+   Grade = 70
+*/
+
+INSERT INTO students (
+    first_name,
+    last_name,
+    birth_date,
+    math_grade
+)
+SELECT
+    'Omer',
+    'Simpson',
+    birth_date,
+    70
+FROM students
+WHERE first_name = 'Omer'
+  AND last_name = 'Simpson'
+LIMIT 1;
+
+
+
+/*
+   Check Omer Simpson
+*/
+
+SELECT *
+FROM students
+WHERE first_name = 'Omer'
+  AND last_name = 'Simpson';
+
+
+
+/*
+   7. BONUS
+   Count how many grades each student has.
+*/
+
+SELECT
+    first_name,
+    last_name,
+    COUNT(math_grade) AS total_grade
+FROM students
+GROUP BY first_name, last_name
+ORDER BY first_name, last_name;
+
+
+
+/*
+   ---------------------------------------------------------
+   SUM
+   ---------------------------------------------------------
+   
+   Find the sum of all students' grades.
+*/
+
+SELECT SUM(math_grade) AS total_grades
+FROM students;
+
+
+
+/* =========================================================
+   EXERCISE 3 - ITEMS AND CUSTOMERS
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   PART I
+   --------------------------------------------------------- */
+
+
+/*
+   1. Create purchases table
+*/
+
+CREATE TABLE purchases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    customer_id INT NOT NULL,
+
+    item_id INT,
+
+    quantity_purchased INT NOT NULL,
+
+    FOREIGN KEY (customer_id)
+        REFERENCES customers(id),
+
+    FOREIGN KEY (item_id)
+        REFERENCES items(id)
+);
+
+
+
+/*
+   2. Insert purchases using subqueries
+*/
+
+
+/*
+   Scott Scott bought one fan
+*/
+
+INSERT INTO purchases (
+    customer_id,
+    item_id,
+    quantity_purchased
+)
+VALUES (
+    (
+        SELECT id
+        FROM customers
+        WHERE first_name = 'Scott'
+          AND last_name = 'Scott'
+    ),
+    (
+        SELECT id
+        FROM items
+        WHERE name = 'fan'
+    ),
+    1
+);
+
+
+/*
+   Melanie Johnson bought ten large desks
+*/
+
+INSERT INTO purchases (
+    customer_id,
+    item_id,
+    quantity_purchased
+)
+VALUES (
+    (
+        SELECT id
+        FROM customers
+        WHERE first_name = 'Melanie'
+          AND last_name = 'Johnson'
+    ),
+    (
+        SELECT id
+        FROM items
+        WHERE name = 'large desk'
+    ),
+    10
+);
+
+
+/*
+   Greg Jones bought two small desks
+*/
+
+INSERT INTO purchases (
+    customer_id,
+    item_id,
+    quantity_purchased
+)
+VALUES (
+    (
+        SELECT id
+        FROM customers
+        WHERE first_name = 'Greg'
+          AND last_name = 'Jones'
+    ),
+    (
+        SELECT id
+        FROM items
+        WHERE name = 'small desk'
+    ),
+    2
+);
+
+
+
+/* =========================================================
+   PART II
+   ========================================================= */
+
+
+/*
+   1.1 Get all purchases
+*/
+
+SELECT *
+FROM purchases;
+
+
+
+/*
+   1.2 Get all purchases joined with customers
+*/
+
+SELECT
+    p.id,
+    p.customer_id,
+    c.first_name,
+    c.last_name,
+    p.item_id,
+    p.quantity_purchased
+FROM purchases AS p
+JOIN customers AS c
+    ON p.customer_id = c.id;
+
+
+
+/*
+   1.3 Purchases of customer ID = 5
+*/
+
+SELECT *
+FROM purchases
+WHERE customer_id = 5;
+
+
+
+/*
+   1.4 Purchases for a large desk AND a small desk
+*/
+
+SELECT
+    p.*
+FROM purchases AS p
+JOIN items AS i
+    ON p.item_id = i.id
+WHERE i.name IN ('large desk', 'small desk');
+
+
+
+/*
+   ---------------------------------------------------------
+   2. Show all customers who have made a purchase
+   ---------------------------------------------------------
+   
+   Required:
+   - Customer first name
+   - Customer last name
+   - Item name
+*/
+
+SELECT
+    c.first_name,
+    c.last_name,
+    i.name AS item_name
+FROM purchases AS p
+JOIN customers AS c
+    ON p.customer_id = c.id
+JOIN items AS i
+    ON p.item_id = i.id;
+
+
+
+/*
+   ---------------------------------------------------------
+   3. Add a row with a customer ID but no item ID
+   ---------------------------------------------------------
+   
+   This works ONLY if item_id allows NULL.
+
+   In our CREATE TABLE above, item_id is nullable,
+   so this insertion works.
+*/
+
+INSERT INTO purchases (
+    customer_id,
+    item_id,
+    quantity_purchased
+)
+VALUES (
+    1,
+    NULL,
+    1
+);
+
+
+/*
+   Check the new row
+*/
+
+SELECT *
+FROM purchases;

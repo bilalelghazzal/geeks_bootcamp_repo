@@ -1,0 +1,111 @@
+body {
+    background: #000;
+    color: #ffe81f;
+    font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Centered Star Wars Title */
+#star-wars-title {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Star Jedi', 'Arial Black', cursive, sans-serif;
+    font-size: 3.5rem;
+    color: #ffe81f;
+    text-align: center;
+    letter-spacing: 4px;
+    text-shadow:
+        0 0 24px #ffe81f, 
+        0 0 36px #fff700, 
+        0 0 84px #ffe81f99,
+        0 0 48px #fff6d6;
+    filter: brightness(1.35);
+    animation: bright-flicker 2.7s infinite alternate;
+    z-index: 10;
+    user-select: none;
+    pointer-events: none;
+}
+
+@keyframes bright-flicker {
+    0% { filter: brightness(1.0); text-shadow: 0 0 18px #ffe81f,0 0 24px #ffe81f99;}
+    38% { filter: brightness(1.45);}
+    62% { filter: brightness(1.12);}
+    72% { filter: brightness(1.7);}
+    100% { filter: brightness(1.32);}
+}
+
+#about {
+    background: rgba(17, 24, 39, 0.8);
+    border: 2px solid #ffe81f;
+    border-radius: 16px;
+    box-shadow: 0 6px 40px 0 #000c20cc;
+    padding: 32px 40px;
+    max-width: 340px;
+    margin-bottom: 28px;
+    text-align: center;
+    animation: fade-in 1.4s cubic-bezier(.39,.575,.565,1);
+    z-index: 1;
+}
+
+#about h1 {
+    margin: 0 0 17px 0;
+    font-size: 2.3rem;
+    font-family: 'Star Jedi', 'Arial Black', cursive, sans-serif;
+    letter-spacing: 2px;
+    text-shadow: 0 0 6px #ffe81f8c, 0 0 20px #000;
+}
+
+#about p {
+    font-size: 1.04rem;
+    margin: 10px 0;
+    letter-spacing: 1px;
+    text-shadow: 0 0 2px #000;
+}
+
+#btn {
+    background: linear-gradient(90deg, #ffe81f 70%, #fff700 100%);
+    color: #111;
+    font-size: 1.18rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 35px;
+    box-shadow: 0 4px 24px 0 #1d283a99;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    font-family: 'Roboto Mono', 'Consolas', monospace;
+    margin-top: 7px;
+}
+
+#btn:hover {
+    background: linear-gradient(90deg, #fff700 40%, #fff100 100%);
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 28px 0 #ffe81f44;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(36px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional: Star Wars font - you need to import, or fallback fonts will be used */
+@font-face {
+    font-family: 'Star Jedi';
+    src: local('Star Jedi'), url('https://fonts.cdnfonts.com/s/14007/Starjedi.ttf') format('truetype');
+    font-display: swap;
+}

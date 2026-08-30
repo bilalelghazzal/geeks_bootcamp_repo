@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+        #container {
+          width: 400px;
+          height: 400px;
+          position: relative;
+          background: yellow;
+        }
+        #animate {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          background-color: red;
+        }
+        </style>
+    </head>
+    <body>
+        <p><button onclick="myMove()">Click Me</button></p>
+        <div id="container">
+          <div id="animate"></div>
+        </div>
+    <script>
+        
+    function myMove() {
+        const elem = document.getElementById("animate");
+        let pos = 0;
+        const container = document.getElementById("container");
+        const maxRight = container.offsetWidth - elem.offsetWidth;
+        let id = setInterval(frame, 1);
+
+        // This function moves the "animate" div to the right by increasing its "left" position.
+        // When it reaches the edge of the container, the interval is cleared to stop the animation.
+        function frame() {
+            if (pos >= maxRight) {
+                clearInterval(id);
+            } else {
+                pos++; 
+                elem.style.left = pos + 'px';
+            }
+        }
+    }
+    </script>    
+
+
+
+
+
+    </body>
+    </html>

@@ -1,0 +1,145 @@
+# ============================================
+# Exercise 1: Cars
+# ============================================
+print("--- Exercise 1: Cars ---")
+
+# Convert string to list programmatically
+cars_string = "Volkswagen, Toyota, Ford Motor, Honda, Chevrolet"
+manufacturers = [m.strip() for m in cars_string.split(",")]
+
+# Number of manufacturers
+print(f"Number of manufacturers: {len(manufacturers)}")
+
+# Reverse/descending order (Z-A)
+sorted_desc = sorted(manufacturers, reverse=True)
+print(f"Descending order (Z-A): {sorted_desc}")
+
+# Count names with letter 'o' (case-insensitive)
+with_o = sum(1 for name in manufacturers if 'o' in name.lower())
+print(f"Manufacturers with 'o': {with_o}")
+
+# Count names without letter 'i' (case-insensitive)
+without_i = sum(1 for name in manufacturers if 'i' not in name.lower())
+print(f"Manufacturers without 'i': {without_i}")
+
+# --- Bonus 1: Remove duplicates ---
+print("\n--- Bonus: Duplicates ---")
+duplicates_list = ["Honda", "Volkswagen", "Toyota", "Ford Motor", "Honda", "Chevrolet", "Toyota"]
+
+# Remove duplicates while preserving order using dict.fromkeys()
+unique_manufacturers = list(dict.fromkeys(duplicates_list))
+
+# Comma-separated string with no line-breaks
+unique_string = ", ".join(unique_manufacturers)
+print(f"Unique companies: {unique_string}")
+print(f"Number of unique companies: {len(unique_manufacturers)}")
+
+# --- Bonus 2: Ascending order with reversed letters ---
+print("\n--- Bonus: Ascending + Reversed Letters ---")
+sorted_asc = sorted(unique_manufacturers)
+reversed_names = [name[::-1] for name in sorted_asc]
+print(f"Ascending with reversed letters: {reversed_names}")
+
+print("\n" + "=" * 50 + "\n")
+
+# ============================================
+# Exercise 2: What's Your Name?
+# ============================================
+print("--- Exercise 2: Get Full Name ---")
+
+def get_full_name(first_name, last_name, middle_name=None):
+    """Return full name with optional middle name."""
+    first_name = first_name.capitalize()
+    last_name = last_name.capitalize()
+    
+    if middle_name:
+        middle_name = middle_name.capitalize()
+        return f"{first_name} {middle_name} {last_name}"
+    else:
+        return f"{first_name} {last_name}"
+
+# Test cases
+print(get_full_name(first_name="john", middle_name="hooker", last_name="lee"))
+print(get_full_name(first_name="bruce", last_name="lee"))
+print(get_full_name(first_name="ada", middle_name="lovelace", last_name="byron"))
+print(get_full_name(first_name="alan", last_name="turing"))
+
+print("\n" + "=" * 50 + "\n")
+
+# ============================================
+# Exercise 3: English ↔ Morse Code
+# ============================================
+print("--- Exercise 3: Morse Code Translator ---")
+
+MORSE_CODE = {
+    'A': '.-',     'B': '-...',   'C': '-.-.',   'D': '-..',
+    'E': '.',      'F': '..-.',   'G': '--.',    'H': '....',
+    'I': '..',     'J': '.---',   'K': '-.-',    'L': '.-..',
+    'M': '--',     'N': '-.',     'O': '---',    'P': '.--.',
+    'Q': '--.-',   'R': '.-.',    'S': '...',    'T': '-',
+    'U': '..-',    'V': '...-',   'W': '.--',    'X': '-..-',
+    'Y': '-.--',   'Z': '--..',
+    '0': '-----',  '1': '.----',  '2': '..---',  '3': '...--',
+    '4': '....-',  '5': '.....',  '6': '-....',  '7': '--...',
+    '8': '---..',  '9': '----.',
+    ' ': '/'
+}
+
+# Create reverse mapping for Morse → English
+REVERSE_MORSE = {v: k for k, v in MORSE_CODE.items()}
+
+
+def english_to_morse(text):
+    """Convert English text to Morse code."""
+    morse_parts = []
+    for char in text.upper():
+        if char in MORSE_CODE:
+            morse_parts.append(MORSE_CODE[char])
+        elif char == ' ':
+            morse_parts.append('/')
+        # Skip unknown characters
+    return ' '.join(morse_parts)
+
+
+def morse_to_english(morse_text):
+    """Convert Morse code back to English text."""
+    words = morse_text.strip().split(' / ')
+    english_words = []
+    
+    for word in words:
+        letters = word.strip().split(' ')
+        decoded_word = ''
+        for code in letters:
+            if code in REVERSE_MORSE:
+                decoded_word += REVERSE_MORSE[code]
+        english_words.append(decoded_word)
+    
+    return ' '.join(english_words)
+
+
+# Test the translators
+test_sentences = [
+    "Hello World",
+    "SOS",
+    "Python is fun",
+    "Open Sesame"
+]
+
+for sentence in test_sentences:
+    morse = english_to_morse(sentence)
+    back_to_english = morse_to_english(morse)
+    
+    print(f"English:  {sentence}")
+    print(f"Morse:    {morse}")
+    print(f"Decoded:  {back_to_english}")
+    print(f"Match:    {'ok' if back_to_english.upper() == sentence.upper() else 'no'}")
+    print("-" * 40)
+
+# Interactive mode
+print("\nTry it yourself!")
+user_input = input("Enter text to convert to Morse (or 'quit' to exit): ")
+if user_input.lower() != 'quit':
+    print(f"Morse: {english_to_morse(user_input)}")
+    
+    morse_input = input("Enter Morse code to decode (use space between letters, / between words): ")
+    print(f"English: {morse_to_english(morse_input)}")
