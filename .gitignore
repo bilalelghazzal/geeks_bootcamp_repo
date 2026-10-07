@@ -4,3 +4,4 @@ package.json
 .env
 index.html 
 // add something
+__pycache__/
