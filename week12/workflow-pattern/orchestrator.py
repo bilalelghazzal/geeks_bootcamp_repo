@@ -49,4 +49,9 @@ class BlogOrchestrator:
         return plan 
 
 
+class BlogOrchestrator():
+    def __init__(self):
+        pass
+    def get_plan(self,topic:str,target_length:int,style:str)->OrchestratorPlan:
+        pass
 
