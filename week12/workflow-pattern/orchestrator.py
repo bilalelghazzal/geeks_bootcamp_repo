@@ -1,3 +1,4 @@
+
 from pydantic import BaseModel, Field
 from openai import OpenAI
 
@@ -12,17 +13,40 @@ class SubTask(BaseModel):
 class OrchestratorPlan(BaseModel):
     topic_analysis: str
     target_audience: str
-    sections:list[SubTask]
+    sections: list[SubTask]
 
-#call the client 
-client=OpenAI()
+
+class SectionContent(BaseModel):
+    content: str
+    key_point: list[str]
+
+
+client = OpenAI()
 
 
 ORCHESTRATOR_PROMPT = """
-    Your are orchestrator  , you take a topic and target and break it down into   list of sections with a description, style guide and target length Topic: {topic}
+You are an orchestrator. Analyze the topic, identify the target
+audience and divide the work into sections with a description,
+style guide and target length.
+
+Topic: {topic}
 Target length: {target_length}
-Style: {style}.
+Style: {style}
 """
+
+
+WORKER_PROMPT = """
+You are a writer. Write the following section and extract
+its key points.
+
+Topic: {topic}
+Section: {section_type}
+Description: {description}
+Style: {style_guide}
+Target length: {target_length}
+"""
+
+
 class BlogOrchestrator:
 
     def get_plan(
@@ -32,26 +56,48 @@ class BlogOrchestrator:
         style: str
     ) -> OrchestratorPlan:
 
-        # get the plan 
         prompt = ORCHESTRATOR_PROMPT.format(
-        topic=topic,
-        target_length=target_length,
-        style=style)
+            topic=topic,
+            target_length=target_length,
+            style=style
+        )
 
-        response =client.chat.completions.parse(
+        response = client.chat.completions.parse(
             model="gpt-4o-mini",
             messages=[{"role": "system", "content": prompt}],
             response_format=OrchestratorPlan
         )
-        plan = response.output_parsed
-        if (plan is None):
-            raise ValueError("Failed to parse the orchestrator plan ")
-        return plan 
 
+        plan = response.choices[0].message.parsed
 
-class BlogOrchestrator():
-    def __init__(self):
-        pass
-    def get_plan(self,topic:str,target_length:int,style:str)->OrchestratorPlan:
-        pass
+        if plan is None:
+            raise ValueError("Failed to parse the orchestrator plan")
 
+        return plan
+
+    def write_section(
+        self,
+        topic: str,
+        section: SubTask
+    ) -> SectionContent:
+
+        prompt = WORKER_PROMPT.format(
+            topic=topic,
+            section_type=section.section_type,
+            description=section.description,
+            style_guide=section.style_guide,
+            target_length=section.target_length
+        )
+
+        response = client.chat.completions.parse(
+            model="gpt-4o-mini",
+            messages=[{"role": "system", "content": prompt}],
+            response_format=SectionContent
+        )
+
+        content = response.choices[0].message.parsed
+
+        if content is None:
+            raise ValueError("Failed to generate section")
+
+        return content
