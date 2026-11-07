@@ -30,5 +30,25 @@ print(list_files())
 
 print("compile a case isensitive regex ")
 pattern="connection pool"
-regex=re.compile(pattern,re.IGNORECASE)
+rx=re.compile(pattern,re.IGNORECASE)
 
+r = rx.search("This strings contains connection pool")
+if r:
+    print("Found a match!")
+r = rx.search("This strings does not contain our regex pattern")
+if not r:
+    print("No match found!")
+
+
+print("\n2. Search one file line by line:")
+file = NOTES_DIR / "02-billing-runbook.md"
+text = file.read_text()
+lines = text.splitlines()
+one_file_hits = []
+
+for i, line in enumerate(lines, start=1):
+    if rx.search(line):
+        rel = file.relative_to(NOTES_DIR)
+        one_file_hits.append(f"{rel}:{i}: {line.strip()}")
+
+print(one_file_hits)
