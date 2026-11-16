@@ -52,3 +52,24 @@ for i, line in enumerate(lines, start=1):
         one_file_hits.append(f"{rel}:{i}: {line.strip()}")
 
 print(one_file_hits)
+
+print("\n3. Search every markdown file:")
+all_files = sorted(NOTES_DIR.rglob("*.md"))
+
+
+def grep(pattern: str, max_results: int = 30) -> list[str]:
+    """Search markdown files for matching lines."""
+    rx = re.compile(pattern, re.IGNORECASE)
+    hits: list[str] = []
+    for file in sorted(NOTES_DIR.rglob("*.md")):
+        for i, line in enumerate(file.read_text().splitlines(), start=1):
+            if rx.search(line):
+                rel = file.relative_to(NOTES_DIR)
+                hits.append(f"{rel}:{i}: {line.strip()}")
+                if len(hits) >= max_results:
+                    return hits
+    return hits
+
+
+print("\ngrep('connection pool'):")
+print(grep("connection pool"))
