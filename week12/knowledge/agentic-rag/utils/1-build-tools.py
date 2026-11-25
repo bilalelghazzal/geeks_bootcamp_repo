@@ -73,3 +73,27 @@ def grep(pattern: str, max_results: int = 30) -> list[str]:
 
 print("\ngrep('connection pool'):")
 print(grep("connection pool"))
+
+# read files : 
+print("resolve the requested path ")
+requested="add.md"
+target=(NOTES_DIR / requested).resolve()
+print(target)
+
+print("check if target stayed inside notes directory")
+print(target.is_relative_to(NOTES_DIR))
+
+print("read the text ")
+print(target.read_text()[:200])
+
+def read_file(requested:str)->str:
+    """Read one markdown file by relative path."""
+    target = (NOTES_DIR / path).resolve()
+    if not target.is_relative_to(NOTES_DIR):
+        raise ValueError(f"Path {path} is outside the notes directory")
+    return target.read_text()
+
+
+print("\nread_file('04-architecture-decisions.md')[:200]:")
+print(read_file("04-architecture-decisions.md")[:200])
+
