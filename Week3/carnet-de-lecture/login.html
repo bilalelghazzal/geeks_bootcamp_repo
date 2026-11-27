@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion - Mon Carnet de Lecture</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="login-page">
+    <header class="header">
+      <h1>📚 Mon Carnet de Lecture</h1>
+      <p>Connectez-vous pour accéder à votre carnet.</p>
+    </header>
+
+    <main class="login-container">
+      <div class="login-card">
+        <h2 id="authTitle">Se connecter</h2>
+        <p class="login-subtitle">Entrez vos identifiants pour continuer</p>
+
+        <form id="authForm">
+          <label for="username">Nom d'utilisateur</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Votre nom d'utilisateur"
+            required
+          />
+
+          <label for="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Votre mot de passe"
+            required
+          />
+
+          <button type="submit" id="authBtn">Se connecter</button>
+        </form>
+
+        <p class="auth-toggle">
+          Pas encore de compte ?
+          <a href="#" id="toggleAuth">Créer un compte</a>
+        </p>
+
+        <p id="authError" class="auth-error hidden"></p>
+      </div>
+    </main>
+
+    <footer>
+      <p>📚 Mon Carnet de Lecture - Tous vos livres au même endroit.</p>
+    </footer>
+
+    <script src="auth.js"></script>
+  </body>
+</html>

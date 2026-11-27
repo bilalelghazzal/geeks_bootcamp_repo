@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon Carnet de Lecture</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>📚 Mon Carnet de Lecture</h1>
+      <p>Organisez, suivez et notez vos lectures facilement.</p>
+    </header>
+
+    <main class="container">
+      <!-- Formulaire -->
+      <section class="form-card">
+        <h2 id="formTitle">Ajouter un livre</h2>
+
+        <form id="bookForm">
+          <label for="title">Titre du livre</label>
+          <input
+            type="text"
+            id="title"
+            placeholder="Ex: Les Misérables"
+            required
+          />
+
+          <label for="author">Auteur</label>
+          <input
+            type="text"
+            id="author"
+            placeholder="Ex: Victor Hugo"
+            required
+          />
+
+          <label for="genre">Genre</label>
+          <input type="text" id="genre" placeholder="Ex: Roman historique" />
+
+          <label for="rating">Note (sur 5 étoiles)</label>
+          <select id="rating">
+            <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+            <option value="4">⭐⭐⭐⭐ (4/5)</option>
+            <option value="3">⭐⭐⭐ (3/5)</option>
+            <option value="2">⭐⭐ (2/5)</option>
+            <option value="1">⭐ (1/5)</option>
+          </select>
+
+          <label for="status">Statut</label>
+          <select id="status">
+            <option value="a-lire">À lire</option>
+            <option value="en-cours">En cours</option>
+            <option value="termine">Terminé</option>
+          </select>
+
+          <label for="review">Avis</label>
+          <textarea
+            id="review"
+            rows="4"
+            placeholder="Votre avis sur ce livre..."
+          ></textarea>
+
+          <label for="coverUrl">URL de couverture</label>
+          <input
+            type="url"
+            id="coverUrl"
+            placeholder="https://exemple.com/couverture.jpg"
+          />
+
+          <label for="coverFile">Photo du livre</label>
+          <input type="file" id="coverFile" accept="image/*" />
+          <img
+            id="coverPreview"
+            class="cover-preview hidden"
+            alt="Aperçu de la couverture"
+          />
+
+          <label for="finishedDate">Date de fin de lecture</label>
+          <input type="date" id="finishedDate" />
+
+          <button type="submit" id="submitBtn">Ajouter au carnet</button>
+
+          <button type="button" id="cancelBtn" class="cancel-btn hidden">
+            Annuler la modification
+          </button>
+        </form>
+      </section>
+
+      <!-- Liste des livres -->
+      <section class="books-section">
+        <!-- Statistiques -->
+        <div class="stats">
+          <div class="stat-card">
+            <span>Total</span>
+            <strong id="totalBooks">0</strong>
+          </div>
+          <div class="stat-card">
+            <span>À lire</span>
+            <strong id="toRead">0</strong>
+          </div>
+          <div class="stat-card">
+            <span>En cours</span>
+            <strong id="reading">0</strong>
+          </div>
+          <div class="stat-card">
+            <span>Terminés</span>
+            <strong id="finished">0</strong>
+          </div>
+        </div>
+
+        <!-- Filtres et tri -->
+        <div class="toolbar">
+          <div class="filters">
+            <button class="filter-btn active" data-filter="tous">Tous</button>
+            <button class="filter-btn" data-filter="a-lire">À lire</button>
+            <button class="filter-btn" data-filter="en-cours">En cours</button>
+            <button class="filter-btn" data-filter="termine">Terminé</button>
+          </div>
+
+          <input
+            type="text"
+            id="search"
+            placeholder="🔍 Rechercher un livre..."
+          />
+
+          <select id="sort">
+            <option value="default">Trier par...</option>
+            <option value="title-asc">Titre A-Z</option>
+            <option value="title-desc">Titre Z-A</option>
+            <option value="author">Auteur</option>
+            <option value="rating-desc">Meilleure note</option>
+            <option value="rating-asc">Moins bonne note</option>
+          </select>
+        </div>
+
+        <!-- Affichage des livres -->
+        <div id="bookList" class="book-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>📚 Mon Carnet de Lecture - Tous vos livres au même endroit.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
